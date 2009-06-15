@@ -21,21 +21,26 @@ $endSide = 'right';
 
 print <<<EOHEADER
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html dir='ltr'>
+<html xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
 <head>
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
 <meta content='true' name='MSSmartTagsPreventParsing'/>
 <meta content='blogger' name='generator'/>
-
-
-
+<link href='favicon.ico' rel='icon' type='image/vnd.microsoft.icon'/>
+<link rel="alternate" type="application/atom+xml" title="Ci Bech's Blog - Atom" href="http://abc.com/atomfeed" />
+<link rel="alternate" type="application/rss+xml" title="Ci Bech's Blog - RSS" href="http://abc.com/rssfeed" />
+<link rel="service.post" type="application/atom+xml" title="Ci Bech's Blog - Atom" href="http://abc/posts/default" />
 <title>$HEADER_title</title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
+<style type="text/css"><!--
 EOHEADER;
 
+require_once("$GLB_phy_base/css/widget.css");
+
 print <<<EOCSS
-<link type='text/css' rel='stylesheet' href='css/common.css' />
+-->
+</style>
 <style id='page-skin-1' type="text/css"><!--
 /*
 -----------------------------------------------
