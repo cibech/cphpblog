@@ -1,0 +1,423 @@
+<?php
+header("Content-Type: text/html; charset=utf-8");
+
+$textColor = '#634320';
+$blogTitleColor = '#fef6ee';
+$blogDescriptionColor = '#fef6ee';
+$postTitleColor = '#ba8247';
+$dateHeaderColor = '#c8ab8f';
+$sidebarHeaderColor = '#bd9e80';
+$mainLinkColor = '#bf4e27';
+$mainVisitedLinkColor = '#8f3213';
+$sidebarLinkColor = '#e2a059';
+$sidebarVisitedLinkColor = '#ba742a';
+$bodyFont = 'normal normal 100% Helvetica,Arial,Verdana,\'Trebuchet MS\', Sans-serif';
+$headerFont = 'normal bold 100% Helvetica,Arial,Verdana,\'Trebuchet MS\', Sans-serif';
+$pageTitleFont = 'normal bold 200% Helvetica,Arial,Verdana,\'Trebuchet MS\', Sans-serif';
+$blogDescriptionFont = 'normal normal 80% Helvetica,Arial,Verdana,\'Trebuchet MS\', Sans-serif';
+$startSide = 'left';
+$endSide = 'right';
+
+
+print <<<EOHEADER
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html dir='ltr'>
+<head>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+<meta content='true' name='MSSmartTagsPreventParsing'/>
+<meta content='blogger' name='generator'/>
+
+
+
+<title>$HEADER_title</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+EOHEADER;
+
+print <<<EOCSS
+<link type='text/css' rel='stylesheet' href='css/common.css' />
+<style id='page-skin-1' type="text/css"><!--
+/*
+-----------------------------------------------
+Blogger Template Style
+Name: 	  Thisaway
+Designer: Dan Rubin
+URL:      www.superfluousbanter.org
+Date:     29 Feb 2004
+Updated by: Blogger Team
+----------------------------------------------- */
+
+body {
+  margin: 0;
+  text-align: center; 
+  min-width: 860px;
+  background: #ce8b43 url("$HEADER_tplpath/images/bg_body.gif") repeat-x left top;
+  color: $textColor;
+  font-size: small;
+}
+
+blockquote {
+  margin: 0;
+  padding: 0 10px 0 10px;
+  border-left: 6px solid #f7e8d8;
+  border-right: 6px solid #f7e8d8;
+  color: #666666;
+}
+
+code {
+  color: $postTitleColor;
+}
+
+hr {
+  display: none;
+}
+
+
+/* layout
+----------------------------------------------- */
+#outer-wrapper {
+  margin: 0 auto;
+  width: 860px;
+  text-align: left;
+  font: $bodyFont;
+}
+
+#header-wrapper {
+  padding-bottom: 10px;
+  background:#493015
+}
+
+#header {
+  height:100px;
+  background: #634320 url("$HEADER_tplpath/images/logo.jpg") repeat-x left bottom;
+}
+
+#content-wrapper {
+  position: relative;
+  width: 860px;
+  background: #f7f0e9 url("$HEADER_tplpath/images/bg.jpg") repeat-y left top;
+}
+
+#main-wrapper {
+  display: inline; /* fixes a strange ie margin bug */
+  float: left;
+  margin: 0 0 0 3px;
+  padding: 0;
+  width: 583px;
+  word-wrap: break-word; /* fix for long text breaking sidebar float in IE */
+  overflow: hidden;     /* fix for long non-text content breaking IE sidebar float */
+}
+
+#main {
+  padding: 22px 8px 0 8px;
+  background: url("$HEADER_tplpath/images/bg_content.gif") repeat-x left top;
+}
+
+.post {
+  margin: 0 8px 14px 21px;
+  padding: 0;
+  border-bottom: 3px solid #f7e8d8;
+}
+
+#comments {
+  margin: 0 16px 14px 29px;
+  padding: 10px;
+  border: 1px solid #f0e0ce;
+  background-color: #f5ede4;
+}
+
+#sidebar-wrapper {
+  display: inline; /* fixes a strange ie margin bug */
+  float: right;
+  margin: 0 3px 0 0;
+  width: 269px;
+  color: $textColor;
+  line-height: 1.4em;
+  font-size: 90%;
+  background: url("$HEADER_tplpath/images/bg_sidebar.gif") repeat-x left top;
+  word-wrap: break-word; /* fix for long text breaking sidebar float in IE */
+  overflow: hidden;     /* fix for long non-text content breaking IE sidebar float */
+}
+
+#sidebar {
+  padding: 7px 11px 0 14px;
+  background: url("$HEADER_tplpath/images/bg_sidebar_arrow.gif") repeat-y 179px 0;
+}
+
+#sidebar .widget { 
+  margin-bottom: 20px;
+ }
+
+
+#footer-wrapper {
+  padding-top: 15px;
+  background: url("$HEADER_tplpath/images/bg_footer_top.gif") no-repeat left top;
+  clear: both;
+}
+
+#footer {
+  background: #493015 url("$HEADER_tplpath/images/bg_footer.gif") repeat-x left top;
+  text-align: center;
+  min-height: 2em;
+}
+
+/* headings
+----------------------------------------------- */
+
+#header h1 {
+  margin: 0;
+  padding: 24px 0 0 84px;
+  }
+
+
+h2.date-header {
+  margin: 0;
+  padding: 0 0 0 29px;
+  text-transform: uppercase;
+  color: $dateHeaderColor;
+  background: url("$HEADER_tplpath/images/icon_date.gif") no-repeat 13px 0;
+  font-size: 80%;
+  font-weight: normal;
+}
+
+.date-header span {
+  margin: 0 0 0 5px;
+  padding: 0 25px 0 25px;
+  background: url("$HEADER_tplpath/images/bg_date.gif") no-repeat 0 0;
+}
+
+.sidebar h2 {
+  padding: 1px 0 0 36px;
+  color: $sidebarHeaderColor;
+  background: url("$HEADER_tplpath/images/icon_sidebar_heading.gif") no-repeat 0 45%;
+  font: $headerFont;
+}
+
+.sidebar .Profile h2 {
+  color: #957252;
+  background: url("$HEADER_tplpath/images/icon_sidebar_profileheading.gif") no-repeat 0 45%;
+}
+
+.post h3 {
+  margin: 13px 0 13px 0;
+  padding: 0;
+  color: $postTitleColor;
+  font-size: 140%;
+}
+
+.post h3 a, .post h3 a:visited { 
+  color: $postTitleColor;
+ }
+
+#comments h4 {
+  margin-top: 0;
+  font-size: 120%;
+}
+
+
+/* text
+----------------------------------------------- */
+
+#header h1 {
+  color: $blogTitleColor;
+  font: $pageTitleFont;
+}
+
+#header .description {
+  margin: 0;
+  padding: 7px 16px 0 84px;
+  color: $blogDescriptionColor;
+  font: $blogDescriptionFont;
+}
+
+.post-body p {
+  line-height: 1.4em;
+  /* Fix bug in IE5/Win with italics in posts */
+  margin: 0;
+  height: 1%;
+  overflow: visible;
+}
+
+.post-footer {
+  font-size: 80%;
+  color: $dateHeaderColor;
+}
+
+.uncustomized-post-template .post-footer {
+  text-align: right;
+}
+
+.uncustomized-post-template .post-footer .post-author,
+.uncustomized-post-template .post-footer .post-timestamp {
+  display: block;
+  float: left;
+  text-align: left;
+  margin-right: 4px;
+}
+
+p.comment-author {
+  font-size: 83%;
+}
+
+.deleted-comment {
+  font-style:italic;
+  color:gray;
+}
+
+.comment-body p {
+  line-height: 1.4em;
+}
+
+.feed-links { 
+  clear: both;
+  line-height: 2.5em;
+  margin-bottom: 0.5em;
+  margin-left: 29px;
+}
+
+#footer .widget { 
+  margin: 0;
+  padding: 0 0 15px 55px;
+  color: #fef6ee;
+  font-size: 90%;
+  line-height: 1.4em;
+  background: url("$HEADER_tplpath/images/icon_footer.gif") no-repeat 16px 0;
+}
+
+
+/* lists
+----------------------------------------------- */
+
+.post ul {
+  padding-left: 32px;
+  list-style-type: none;
+  line-height: 1.4em;
+}
+
+.post li {
+  padding: 0 0 4px 17px;
+  background: url("$HEADER_tplpath/images/icon_list_item.gif") no-repeat 0 3px;
+}
+
+#comments ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+#comments li {
+  padding: 0 0 1px 17px;
+  background: url("$HEADER_tplpath/images//icon_comment.gif") no-repeat 0 3px;
+}
+
+.sidebar ul {
+  padding: 0;
+  list-style-type: none;
+  line-height: 1.2em;
+  margin-left: 0;
+}
+
+.sidebar li {
+  padding: 0 0 4px 17px;
+  background: url("$HEADER_tplpath/images/icon_list_item.gif") no-repeat 0 3px;
+}
+
+#blog-pager-newer-link {
+  float: left;
+  margin-left: 29px;
+ }
+ 
+#blog-pager-older-link {
+  float: right;
+  margin-right: 16px;
+ }
+ 
+#blog-pager {   
+  text-align: center; 
+ }
+
+/* links
+----------------------------------------------- */
+a {
+  color: $mainLinkColor;
+  font-weight: bold;
+}
+
+a:hover {
+  color: $mainVisitedLinkColor;
+}
+
+a.comment-link {
+/* ie5.0/win doesn't apply padding to inline elements,
+   so we hide these two declarations from it */
+  background/* */:/**/url("$HEADER_tplpath/images/icon_comment.gif") no-repeat 0 45%;
+  padding-left: 14px;
+}
+
+html>body a.comment-link {
+  /* respecified, for ie5/mac's benefit */
+  background: url("$HEADER_tplpath/images/icon_comment.gif") no-repeat 0 45%;
+  padding-left: 14px;
+}
+
+.sidebar a {
+  color: $sidebarLinkColor;
+}
+
+.sidebar a:hover {
+  color: $sidebarVisitedLinkColor;
+}
+
+
+#header h1 a {
+  color: $blogTitleColor;
+  text-decoration: none;
+}
+
+#header h1 a:hover {
+  color: #d9c6b4;
+}
+
+.post h3 a {
+  text-decoration: none;
+}
+
+a img { 
+ border-width: 0;
+}
+
+.clear {
+  clear: both;
+  line-height: 0;
+  height: 0;
+}
+
+.profile-textblock { 
+  clear: both;
+  margin-bottom: 10px;
+  margin-left: 0;
+}
+
+.profile-img { 
+  float: left;
+  margin: 0 5px 5px 0;
+  padding: 3px;
+  border: 1px solid #ebd4bd;
+}
+
+.profile-link { 
+  padding: 0 0 0 17px;
+  background: url("$HEADER_tplpath/images/icon_profile.gif") no-repeat 0 0;
+}
+
+/** Page structure tweaks for layout editor wireframe */
+
+body#layout #main,
+body#layout #sidebar { 
+  padding: 0;
+}-->
+</style>
+</head>
+
+EOCSS;
+?>
