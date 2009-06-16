@@ -35,13 +35,16 @@ CREATE TABLE `tm_post` (
   `tb_post` mediumtext COMMENT 'Post content',
   `tn_delflag` tinyint(3) unsigned NOT NULL default '0' COMMENT 'Delete flag',
   PRIMARY KEY  (`i_postid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Post of the blog';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Post of the blog';
 
 --
 -- Dumping data for table `tm_post`
 --
 
 /*!40000 ALTER TABLE `tm_post` DISABLE KEYS */;
+INSERT INTO `tm_post` (`i_postid`,`s_posturi`,`s_posttitle`,`dt_postdate`,`c_posttime`,`tb_post`,`tn_delflag`) VALUES 
+ (1,'200906027433','实验性质的标题','2009-06-02','1622','我希望我能看到一片文章哦',0),
+ (2,'200906027569','这是第二篇','2009-06-02','1722','嗯，这是我的第二篇文章',0);
 /*!40000 ALTER TABLE `tm_post` ENABLE KEYS */;
 
 
@@ -54,7 +57,7 @@ CREATE TABLE `tm_tags` (
   `i_postid` int(10) unsigned NOT NULL COMMENT 'Post id from post',
   `c_tagid` char(4) NOT NULL COMMENT 'Tag id',
   `tn_delflag` tinyint(3) unsigned NOT NULL default '0' COMMENT 'Delete Flag',
-  PRIMARY KEY  (`i_postid`)
+  PRIMARY KEY  USING BTREE (`i_postid`,`c_tagid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Post tags';
 
 --
