@@ -2,14 +2,14 @@
 Class DB {
 	var $query_num = 0;
 
-	function DB($dbhost, $dbuser, $dbpw, $dbname, $pconnect = 0) {
-		$this->connect($dbhost, $dbuser, $dbpw, $dbname, $pconnect);
+	function DB($dbhost, $dbuser, $dbpw, $dbname, $pconnect = 0, $charset = 'utf-8') {
+		$this->connect($dbhost, $dbuser, $dbpw, $dbname, $pconnect, $charset);
 	}
-	function connect($dbhost, $dbuser, $dbpw, $dbname, $pconnect = 0) {
+	function connect($dbhost, $dbuser, $dbpw, $dbname, $pconnect = 0, $charset = 'utf-8') {
 		$pconnect==0 ? @mysql_connect($dbhost, $dbuser, $dbpw) : @mysql_pconnect($dbhost, $dbuser, $dbpw);
 		mysql_errno()!=0 && $this->halt("Connect($pconnect) to MySQL failed");
-		if($this->server_info() > '4.1' && $GLOBALS['charset']){
-			mysql_query("SET character_set_connection=".$GLOBALS['charset'].", character_set_results=".$GLOBALS['charset'].", character_set_client=binary");
+		if($this->server_info() > '4.1'){
+			mysql_query("SET character_set_connection=" . $charset . ", character_set_results=". $charset .", character_set_client=binary");
 		}
 		if($this->server_info() > '5.0'){
 			mysql_query("SET sql_mode=''");
@@ -32,7 +32,6 @@ Class DB {
 		return mysql_get_server_info();
 	}
 	function query($SQL,$method='') {
-		$GLOBALS['PW']=='pw_' or $SQL=str_replace('pw_',$GLOBALS['PW'],$SQL);
 		if($method=='U_B' && function_exists('mysql_unbuffered_query')){
 			$query = mysql_unbuffered_query($SQL);
 		}else{
@@ -64,14 +63,6 @@ Class DB {
 	}
 
 	function update($SQL) {
-		$GLOBALS['PW']=='pw_' or $SQL=str_replace('pw_',$GLOBALS['PW'],$SQL);
-		if($GLOBALS['db_lp']==1){
-			if(substr($SQL,0,7)=='REPLACE'){
-				$SQL=substr($SQL,0,7).' LOW_PRIORITY'.substr($SQL,7);
-			} else{
-				$SQL=substr($SQL,0,6).' LOW_PRIORITY'.substr($SQL,6);
-			}
-		}
 		if(function_exists('mysql_unbuffered_query')){
 			$query = mysql_unbuffered_query($SQL);
 		}else{
@@ -108,8 +99,23 @@ Class DB {
 	}
 
 	function halt($msg='') {
-		require_once(R_P.'require/db_mysql_error.php');
 		new DB_ERROR($msg);
+	}
+}
+
+Class DB_ERROR {
+
+	function DB_ERROR($msg) {
+
+		$sqlerror = mysql_error();
+		$sqlerrno = mysql_errno();
+
+		echo"<html><head><title>Error</title><style type='text/css'>P,BODY{FONT-FAMILY:tahoma,arial,sans-serif;FONT-SIZE:11px;}A { TEXT-DECORATION: none;}a:hover{ text-decoration: underline;}TD { BORDER-RIGHT: 1px; BORDER-TOP: 0px; FONT-SIZE: 16pt; COLOR: #000000;}</style><body>\n\n";
+		echo"<table style='TABLE-LAYOUT:fixed;WORD-WRAP: break-word'><tr><td>$msg";
+		echo"<br><br><b>Error Happened!";
+		echo"<br><br><b>MySQL Server Error</b>:<br>$sqlerror  ( $sqlerrno )";
+		echo"</td></tr></table>";
+		exit;
 	}
 }
 
