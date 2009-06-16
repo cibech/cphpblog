@@ -2,10 +2,10 @@
 Class DB {
 	var $query_num = 0;
 
-	function DB($dbhost, $dbuser, $dbpw, $dbname, $pconnect = 0, $charset = 'utf-8') {
+	function DB($dbhost, $dbuser, $dbpw, $dbname, $pconnect = 0, $charset = 'utf8') {
 		$this->connect($dbhost, $dbuser, $dbpw, $dbname, $pconnect, $charset);
 	}
-	function connect($dbhost, $dbuser, $dbpw, $dbname, $pconnect = 0, $charset = 'utf-8') {
+	function connect($dbhost, $dbuser, $dbpw, $dbname, $pconnect = 0, $charset = 'utf8') {
 		$pconnect==0 ? @mysql_connect($dbhost, $dbuser, $dbpw) : @mysql_pconnect($dbhost, $dbuser, $dbpw);
 		mysql_errno()!=0 && $this->halt("Connect($pconnect) to MySQL failed");
 		if($this->server_info() > '4.1'){

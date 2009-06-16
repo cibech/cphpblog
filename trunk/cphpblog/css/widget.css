@@ -215,7 +215,7 @@ table.section-columns td.first
 }
 .backlink-toggle-zippy
 {
-	background: url("$GLB_url_base/img/triangle_ltr.gif") no-repeat left center;
+	background: url("$GLB_root_url/img/triangle_ltr.gif") no-repeat left center;
 	cursor: hand;
 	cursor: pointer;
 	margin-right: .1em;
@@ -223,7 +223,7 @@ table.section-columns td.first
 }
 .expanded-backlink .backlink-toggle-zippy
 {
-	background-image: url("$GLB_url_base/img/triangle_open.gif");
+	background-image: url("$GLB_root_url/img/triangle_open.gif");
 }
 .collapsed-backlink .collapseable
 {
@@ -290,19 +290,19 @@ table.section-columns td.first
 }
 #comments .blogger-comment-icon,.blogger-comment-icon
 {
-	background: url("$GLB_url_base/img/b16-rounded.gif") left no-repeat;
+	background: url("$GLB_root_url/img/b16-rounded.gif") left no-repeat;
 	line-height: 16px;
 	padding-left: 20px;
 }
 #comments .openid-comment-icon,.openid-comment-icon
 {
-	background: url("$GLB_url_base/img/openid16-rounded.gif") left no-repeat;
+	background: url("$GLB_root_url/img/openid16-rounded.gif") left no-repeat;
 	line-height: 16px;
 	padding-left: 20px;
 }
 #comments .anon-comment-icon,.anon-comment-icon
 {
-	background: url("$GLB_url_base/img/anon16-rounded.gif") left no-repeat;
+	background: url("$GLB_root_url/img/anon16-rounded.gif") left no-repeat;
 	line-height: 16px;
 	padding-left: 20px;
 }
@@ -405,14 +405,14 @@ div.subscribe
 }
 div.subscribe div.top
 {
-	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="$GLB_url_base/img/widgets/s_top.png",sizingMethod='crop');
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="$GLB_root_url/img/widgets/s_top.png",sizingMethod='crop');
 	font-size: 1em;
 	padding: 4px 5px 1px 5px;
 	width: 144px;
 }
 html>body div.subscribe div.top
 {
-	background: url("$GLB_url_base/img/widgets/s_top.png") top left no-repeat;
+	background: url("$GLB_root_url/img/widgets/s_top.png") top left no-repeat;
 }
 span.inner
 {
@@ -426,7 +426,7 @@ span.inner
 }
 div.subscribe div.bottom
 {
-	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="$GLB_url_base/img/widgets/s_bottom.png",sizingMethod='crop');
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="$GLB_root_url/img/widgets/s_bottom.png",sizingMethod='crop');
 	font-size: 3px;
 	height: 3px;
 	line-height: 0;
@@ -438,7 +438,7 @@ div.subscribe div.bottom
 }
 html>body div.subscribe div.bottom
 {
-	background: url("$GLB_url_base/img/widgets/s_bottom.png") bottom left no-repeat;
+	background: url("$GLB_root_url/img/widgets/s_bottom.png") bottom left no-repeat;
 	margin-bottom: 0;
 	padding-bottom: 0;
 	width: 144px;

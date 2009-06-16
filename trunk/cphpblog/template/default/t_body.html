@@ -1,6 +1,5 @@
 <?php
 print <<<EOBODY
-
 <body>
 <div id='outer-wrapper'>
 	<div id='wrap2'>
@@ -20,19 +19,25 @@ print <<<EOBODY
 				<div class='main section' id='main'>
 					<div class='widget Blog' id='Blog1'>
 						<div class='blog-posts hfeed'>
+EOBODY;
+
+$TMP_post = array();
+foreach($BODY_posts as $TMP_post)
+{ 
+	print <<<EOBODY
 						
 							<!-- google_ad_section_start -->
-							<h2 class='date-header'>$BODY_posts[0]['dt_postdate']</h2>
+							<h2 class='date-header'>$TMP_post[dt_postdate]</h2>
 							
 							<!--Post start-->
 							<div class='post uncustomized-post-template'>
 								<a name='6845352070128220716'></a>
-								<h3 class='post-title'><a href='#'>$BODY_posts[0]['s_posttitle']</a></h3>
+								<h3 class='post-title'><a href='#'>$TMP_post[s_posttitle]</a></h3>
 								
 								<div class='post-header-line-1'></div>
 
 								<div class='post-body'>
-									<p>$BODY_posts[0]['tb_post']</p>
+									<p>$TMP_post[tb_post]</p>
 									
 									<div style='clear: both;'></div>
 								</div>
@@ -41,7 +46,7 @@ print <<<EOBODY
 									<p class='post-footer-line post-footer-line-1'>
 										<span class='post-author'> 发贴者 Ci Bech </span>
 										<span class='post-timestamp'>时间&#65306;
-											<a class='timestamp-link' href='#' title='permanent link'>$BODY_posts[0]['c_posttime']</a>
+											<a class='timestamp-link' href='#' title='permanent link'>$TMP_post[c_posttime]</a>
 										</span>
 										<span class='post-comment-link'> 
 											<a class='comment-link'	href='#' onclick=''>0评论</a>
@@ -65,7 +70,11 @@ print <<<EOBODY
 								</div>
 							</div>
 							<!--Post end-->
-							
+
+EOBODY;
+}
+print <<<EOBODY
+
 							<h2 class='date-header'>2009年6月15日 星期2</h2>
 							<!--Post start-->
 							<div class='post uncustomized-post-template'>
