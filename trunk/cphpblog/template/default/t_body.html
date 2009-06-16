@@ -22,17 +22,17 @@ print <<<EOBODY
 						<div class='blog-posts hfeed'>
 						
 							<!-- google_ad_section_start -->
-							<h2 class='date-header'>2009年6月15日 星期一</h2>
+							<h2 class='date-header'>$BODY_posts[0]['dt_postdate']</h2>
 							
 							<!--Post start-->
 							<div class='post uncustomized-post-template'>
 								<a name='6845352070128220716'></a>
-								<h3 class='post-title'><a href='#'>视频的插入效果</a></h3>
+								<h3 class='post-title'><a href='#'>$BODY_posts[0]['s_posttitle']</a></h3>
 								
 								<div class='post-header-line-1'></div>
 
 								<div class='post-body'>
-									<p>This is the post body, post as much thing here as you could!</p>
+									<p>$BODY_posts[0]['tb_post']</p>
 									
 									<div style='clear: both;'></div>
 								</div>
@@ -41,7 +41,7 @@ print <<<EOBODY
 									<p class='post-footer-line post-footer-line-1'>
 										<span class='post-author'> 发贴者 Ci Bech </span>
 										<span class='post-timestamp'>时间&#65306;
-											<a class='timestamp-link' href='#' title='permanent link'>00:35</a>
+											<a class='timestamp-link' href='#' title='permanent link'>$BODY_posts[0]['c_posttime']</a>
 										</span>
 										<span class='post-comment-link'> 
 											<a class='comment-link'	href='#' onclick=''>0评论</a>
@@ -116,14 +116,12 @@ print <<<EOBODY
 							<a class='home-link' href='#'>返回首页</a>
 						</div>
 						
-						<div class='clear'></div>
-
 						<div class='blog-feeds'>
-							<div class='feed-links'>订阅RSS: 
-								<img align='top' src='#' />
-								<a class='feed-link' href='#' target='_blank' type='application/atom+xml'>帖子(Atom)</a>
+							<div class='feed-links'>
+
 							</div>
 						</div>
+
 
 					</div>
 				</div>
@@ -175,15 +173,25 @@ print <<<EOBODY
 				
 						</div>
 					</div>
-
-					<div class='widget BloggerButton' id='BloggerButton1'>
+					
+					<div class='widget BloggerButton' id='BloggerButton2'>
+						<h2>订阅</h2>
 						<div class='widget-content'>
-							<a href='#'><img alt='Powered By Blogger' src='#' /></a>
+							<p id="blogfeeds"><a target="_blank" href="$GLB_root_url/feed/atom.php" type="application/atom+xml"><img src="$GLB_root_url/img/rss.png"></a></p>
 							
 							<div class='clear'></div>
 						</div>
 					</div>
-				
+					
+					<div class='widget BloggerButton' id='BloggerButton1'>
+						<div class='widget-content'>
+							<a href='http://www.blogger.com'><img alt='Powered By Blogger' src='$GLB_root_url/img/blogger-ipower-kahki.gif' /></a>
+							
+							<div class='clear'></div>
+						</div>
+					</div>
+					
+					
 				</div>
 			
 			</div>
