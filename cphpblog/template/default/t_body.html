@@ -22,8 +22,15 @@ print <<<EOBODY
 EOBODY;
 
 $TMP_post = array();
+
 foreach($BODY_posts as $TMP_post)
 { 
+	$TMP_tags_html = '';
+	
+	foreach($BODY_tags[$TMP_post['i_postid']] as $TMP_taglink_id=>$TMP_post_tags)
+	{
+		$TMP_tags_html .= "&nbsp;<a href='$TMP_taglink_id' rel='tag'>$TMP_post_tags</a>&nbsp;";
+	}
 	print <<<EOBODY
 						
 							<!-- google_ad_section_start -->
@@ -31,8 +38,8 @@ foreach($BODY_posts as $TMP_post)
 							
 							<!--Post start-->
 							<div class='post uncustomized-post-template'>
-								<a name='6845352070128220716'></a>
-								<h3 class='post-title'><a href='#'>$TMP_post[s_posttitle]</a></h3>
+								<a name='$TMP_post[s_posturi]'></a>
+								<h3 class='post-title'><a href='$TMP_post[s_posturi]'>$TMP_post[s_posttitle]</a></h3>
 								
 								<div class='post-header-line-1'></div>
 
@@ -44,28 +51,30 @@ foreach($BODY_posts as $TMP_post)
 								
 								<div class='post-footer'>
 									<p class='post-footer-line post-footer-line-1'>
-										<span class='post-author'> 发贴者 Ci Bech </span>
+										<span class='post-author'>发贴者 $TMP_post[s_user_name]</span>
 										<span class='post-timestamp'>时间&#65306;
-											<a class='timestamp-link' href='#' title='permanent link'>$TMP_post[c_posttime]</a>
+											<a class='timestamp-link' href='$TMP_post[s_posturi]' title='permanent link'>$TMP_post[c_posttime]</a>
 										</span>
 										<span class='post-comment-link'> 
-											<a class='comment-link'	href='#' onclick=''>0评论</a>
+											<a class='comment-link'	href='#' onclick=''><!--Need Edit-->0 评论</a>
 										</span>
-										<span class='post-backlinks post-comment-link'> The permer links </span> 
+										<span class='post-backlinks post-comment-link'><!--Permernent Link--></span> 
 										<span class='post-icons'>
-											<span class='item-control blog-admin pid-709660667'>
+											<span class='item-control blog-admin pid-$TMP_post[s_posturi]'>
 												<a href='#'	title='Edit Post'>
-													<span class='quick-edit-icon'>&#160;</span>
+													<span class='quick-edit-icon'><!--This links to edit the post--></span>
 												</a>
 											</span>
 										</span>
 									</p>
 
 									<p class='post-footer-line post-footer-line-2'>
-										<span class='post-labels'> Post Labels </span>
+										<span class='post-labels'>标签&#65306;
+											$TMP_tags_html
+										</span>
 									</p>
 									
-									<p class='post-footer-line post-footer-line-3'>Post Line 3</p>
+									<p class='post-footer-line post-footer-line-3'><!--The third line of the bottom post--></p>
 								
 								</div>
 							</div>
@@ -74,48 +83,7 @@ foreach($BODY_posts as $TMP_post)
 EOBODY;
 }
 print <<<EOBODY
-
-							<h2 class='date-header'>2009年6月15日 星期2</h2>
-							<!--Post start-->
-							<div class='post uncustomized-post-template'>
-								<a	name='6845352070128220716'></a>
-								<h3 class='post-title'><a href='#'>视频的插入效果</a></h3>
-							
-								<div class='post-header-line-1'></div>
-							
-								<div class='post-body'>
-									<p>This is the post body, post as much thing here as you could!</p>
-									<div style='clear: both;'></div>
-								</div>
-							
-								<div class='post-footer'>
-									<p class='post-footer-line post-footer-line-1'>
-										<span class='post-author'> 发贴者 Ci Bech </span> 
-										<span class='post-timestamp'>时间&#65306; 
-											<a class='timestamp-link' href='#' title='permanent link'>00:35</a>
-										</span>
-										<span class='post-comment-link'>
-											<a class='comment-link'	href='#' onclick=''>0评论</a>
-										</span>
-										<span class='post-backlinks post-comment-link'> The permer links </span>
-										<span class='post-icons'>
-											<span class='item-control blog-admin pid-709660667'>
-												<a href='#'	title='Edit Post'><span class='quick-edit-icon'>&#160;</span></a>
-											</span>
-										</span>
-									</p>
-
-									<p class='post-footer-line post-footer-line-2'>
-										<span class='post-labels'>
-											<a href='#' rel='tag'>杂事</a>
-										</span>
-									</p>
-									
-									<p class='post-footer-line post-footer-line-3'>Post Line 3</p>
-								
-								</div>
-							</div>
-							<!--Post end-->					
+				
 							<!-- google_ad_section_end -->
 						</div>
 						
