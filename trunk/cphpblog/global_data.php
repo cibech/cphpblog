@@ -2,11 +2,15 @@
 //For this is DEPRECATED in PHP6, disable this featrue
 set_magic_quotes_runtime(FALSE);
 
+require_once('define.php');
 require_once('conf/global_conf.php');
 require_once('data/mysql_db.php');
+require_once('data/date_ui.php');
 
-$GLB_phy_base = getdirname(__FILE__);
+$GLB_phy_base = us_getdirname(__FILE__);
 $GLB_theme = $CONF_theme;
+
+$GLB_user = 'cibech';
 
 //Return as /cpphblog , if at the top of uri, return nothing.
 $GLB_root_url = substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'],'/'));
@@ -18,7 +22,7 @@ $GLB_db = new DB($CONF_dbhost, $CONF_dbuser, $CONF_dbpass, $CONF_dbname, $CONF_d
 unset($CONF_dbhost, $CONF_dbuser, $CONF_dbpass, $CONF_dbname);
 
 //Case some file may be placed under the ROOT dir, So remove the slash from the tail of the path
-function getdirname($file_phy_fullpath){
+function us_getdirname($file_phy_fullpath){
 	if(strpos($file_phy_fullpath,'\\')!==false){
 		return substr($file_phy_fullpath,0,strrpos($file_phy_fullpath,'\\'));
 	}elseif(strpos($file_phy_fullpath,'/')!==false){
