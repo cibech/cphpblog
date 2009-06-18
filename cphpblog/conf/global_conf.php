@@ -10,5 +10,5 @@ $CONF_dbpass='root';
 $CONF_dbname='cphpblog';
 $CONF_dbpconnect=0;
 
-$CONF_ui_lang=UD_EN;
+$CONF_ui_lang=UD_JP;
 ?>

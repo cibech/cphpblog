@@ -3,6 +3,7 @@
 set_magic_quotes_runtime(FALSE);
 
 require_once('define.php');
+require_once('ui.php');
 require_once('conf/global_conf.php');
 require_once('data/mysql_db.php');
 require_once('data/date_ui.php');

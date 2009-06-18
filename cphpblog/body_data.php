@@ -27,7 +27,8 @@ while($TMP_post = $GLB_db->fetch_array($SQL_posts_query))
 	
 	$TMP_timestamp = mktime($TMP_hour, $TMP_minutes, 0, $TMP_month, $TMP_day, $TMP_year);
 	
-	$TMP_dofweek = date('w', $TMP_timestamp);
+	//These vars count from 1
+	$TMP_dofweek = date('w', $TMP_timestamp) + 1;
 	$TMP_month = date('n', $TMP_timestamp);
 	$TMP_day = date('j', $TMP_timestamp);
 	

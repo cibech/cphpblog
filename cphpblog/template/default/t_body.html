@@ -1,4 +1,15 @@
 <?php
+
+$BODY_str_poster = $UI_POSTER[$CONF_ui_lang];
+$BODY_str_time = $UI_TIME[$CONF_ui_lang];
+$BODY_str_comments = $UI_COMMENTS[$CONF_ui_lang];
+$BODY_str_labels = $UI_LABELS[$CONF_ui_lang];
+$BODY_str_blogarchive = $UI_BLOGARCHIVE[$CONF_ui_lang];
+$BODY_str_feed = $UI_FEED[$CONF_ui_lang];
+$BODY_str_prev = $UI_PREV[$CONF_ui_lang];
+$BODY_str_next = $UI_NEXT[$CONF_ui_lang];
+$BODY_str_home = $UI_HOME[$CONF_ui_lang];
+
 print <<<EOBODY
 <body>
 <div id='outer-wrapper'>
@@ -51,12 +62,12 @@ foreach($BODY_posts as $TMP_post)
 								
 								<div class='post-footer'>
 									<p class='post-footer-line post-footer-line-1'>
-										<span class='post-author'>发贴者 $TMP_post[s_user_name]</span>
-										<span class='post-timestamp'>时间&#65306;
+										<span class='post-author'>$BODY_str_poster $TMP_post[s_user_name]</span>
+										<span class='post-timestamp'>$BODY_str_time
 											<a class='timestamp-link' href='$TMP_post[s_posturi]' title='permanent link'>$TMP_post[c_posttime]</a>
 										</span>
 										<span class='post-comment-link'> 
-											<a class='comment-link'	href='comments.php?$TMP_post[i_postid]' onclick=''><!--Need Edit-->$TMP_post[i_cmcount] 评论</a>
+											<a class='comment-link'	href='comments.php?$TMP_post[i_postid]' onclick=''>$TMP_post[i_cmcount] $BODY_str_comments</a>
 										</span>
 										<span class='post-backlinks post-comment-link'><!--Permernent Link--></span> 
 										<span class='post-icons'>
@@ -69,7 +80,7 @@ foreach($BODY_posts as $TMP_post)
 									</p>
 
 									<p class='post-footer-line post-footer-line-2'>
-										<span class='post-labels'>标签&#65306;
+										<span class='post-labels'>$BODY_str_labels
 											$TMP_tags_html
 										</span>
 									</p>
@@ -89,9 +100,9 @@ print <<<EOBODY
 						</div>
 						
 						<div id='blog-pager'>
-							<a href='#' id='blog-pager-older-link' title='较旧的帖子'>较旧的帖子&#65288;前一篇&#65289;</a>
-							<a href='#'	id='blog-pager-newer-link' title='较新的帖子'>较新的帖子&#65288;后一篇&#65289;</a>
-							<a class='home-link' href='#'>返回首页</a>
+							<a href='#' id='blog-pager-older-link' title='$BODY_str_prev'>$BODY_str_prev</a>
+							<a href='#'	id='blog-pager-newer-link' title='$BODY_str_next'>$BODY_str_next</a>
+							<a class='home-link' href='#'>$BODY_str_home</a>
 						</div>
 						
 						<div class='blog-feeds'>
@@ -110,7 +121,7 @@ print <<<EOBODY
 			
 				<div class='sidebar section' id='sidebar'>
 					<div class='widget Label' id='Label1'>
-						<h2>标签</h2>
+						<h2>$BODY_str_labels</h2>
 
 						<div class='widget-content'>
 							<ul>
@@ -135,7 +146,7 @@ print <<<EOBODY
 					</div>
 
 					<div class='widget BlogArchive' id='BlogArchive1'>
-						<h2>博客归档</h2>
+						<h2>$BODY_str_blogarchive</h2>
 						
 						<div class='widget-content'>
 							<div id='ArchiveList'>
@@ -213,7 +224,7 @@ print <<<EOBODY
 					</div>
 					
 					<div class='widget BloggerButton' id='BloggerButton2'>
-						<h2>订阅</h2>
+						<h2>$BODY_str_feed</h2>
 						<div class='widget-content'>
 							<p id="blogfeeds"><a target="_blank" href="$GLB_root_url/feed/atom.php" type="application/atom+xml"><img src="$GLB_root_url/img/rss.png"></a></p>
 							
