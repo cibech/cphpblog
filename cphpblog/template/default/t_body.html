@@ -56,7 +56,7 @@ foreach($BODY_posts as $TMP_post)
 											<a class='timestamp-link' href='$TMP_post[s_posturi]' title='permanent link'>$TMP_post[c_posttime]</a>
 										</span>
 										<span class='post-comment-link'> 
-											<a class='comment-link'	href='#' onclick=''><!--Need Edit-->0 评论</a>
+											<a class='comment-link'	href='comments.php?$TMP_post[i_postid]' onclick=''><!--Need Edit-->$TMP_post[i_cmcount] 评论</a>
 										</span>
 										<span class='post-backlinks post-comment-link'><!--Permernent Link--></span> 
 										<span class='post-icons'>
@@ -82,6 +82,7 @@ foreach($BODY_posts as $TMP_post)
 
 EOBODY;
 }
+
 print <<<EOBODY
 				
 							<!-- google_ad_section_end -->
@@ -113,9 +114,20 @@ print <<<EOBODY
 
 						<div class='widget-content'>
 							<ul>
-								<li><a href='#'>动漫</a>(7)</li>
-								<li><a href='#'>杂事</a>(21)</li>
-								<li><a href='#'>计算机与网络</a>(10)</li>
+EOBODY;
+
+$TMP_tags_total = array();
+
+foreach($BODY_tags_total as $TMP_tags_total)
+{	
+	print <<<EOBODY
+								
+								<li><a href='$TMP_tags_total[i_tagid]'>$TMP_tags_total[s_tagname]</a>($TMP_tags_total[i_tgcount])</li>
+
+EOBODY;
+}
+
+print <<<EOBODY
 							</ul>
 
 							<div class='clear'></div>
@@ -129,19 +141,68 @@ print <<<EOBODY
 							<div id='ArchiveList'>
 								<div id='BlogArchive1_ArchiveList'>
 									<ul>
+EOBODY;
+
+$TMP_title_year_total = array();
+$TMP_title_month_total = array();
+
+foreach($BODY_title_total as $TMP_year=>$TMP_title_year_total)
+{	
+	//Count the years total posts
+	$TMP_year_count = 0;
+	foreach($BODY_title_count[$TMP_year] as $TMP_month_ctarray)
+	{
+		$TMP_year_count += array_sum($TMP_month_ctarray);
+	}
+	
+	print <<<EOBODY
+
 										<li class='archivedate expanded'>
 											<a class='toggle' href='#'><span class='zippy toggle-open'>&#9660;</span></a>
-											<a class='post-count-link' href='#'>2009</a>(<span class='post-count'>3</span>)
+											<a class='post-count-link' href='$TMP_year'>2009</a>(<span class='post-count'>$TMP_year_count</span>)
 												<ul>
+EOBODY;
+	
+	foreach($TMP_title_year_total as $TMP_month=>$TMP_title_month_total)
+	{
+		$TMP_month_count = 0;
+		$TMP_month_count = array_sum($TMP_month_ctarray);
+		
+		$TMP_month_name = $GLB_date->get_month_name($TMP_month);
+		print <<<EOBODY
+
 													<li class='archivedate expanded'>
 														<a class='toggle' href='#'><span class='zippy toggle-open'>&#9660;</span></a>
-														<a class='post-count-link' href='#'>六月</a>(<span class='post-count'>1</span>)
-															<ul class='posts'>
-																<li><a href='#'>视频的插入效果</a></li>
+														<a class='post-count-link' href='$TMP_year&$TMP_month'>$TMP_month_name</a>(<span class='post-count'>$TMP_month_count</span>)
+															<ul class='posts'>			
+EOBODY;
+
+		foreach($TMP_title_month_total as $TMP_title)
+		{
+		
+			print <<<EOBODY
+
+																<li><a href='$TMP_title[s_posturi]'>$TMP_title[s_posttitle]</a></li>
+EOBODY;
+		}
+		
+		print <<<EOBODY
+
 															</ul>
 													</li>
+EOBODY;
+	}
+	
+	print <<<EOBODY
+
 												</ul>
 										</li>
+EOBODY;
+}
+
+print <<<EOBODY
+
+																			
 									</ul>
 								</div>
 							</div>

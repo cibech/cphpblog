@@ -18,6 +18,8 @@ $GLB_root_url = substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME
 $GLB_url_base = $CONF_protocol . $_SERVER['HTTP_HOST'] . $CONF_port . $GLB_root_url;
 
 $GLB_db = new DB($CONF_dbhost, $CONF_dbuser, $CONF_dbpass, $CONF_dbname, $CONF_dbpconnect, $CONF_charset);
+$GLB_date = new UCDATE($CONF_ui_lang);
+	
 //For security reason, unset the database virables
 unset($CONF_dbhost, $CONF_dbuser, $CONF_dbpass, $CONF_dbname);
 

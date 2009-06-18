@@ -1,60 +1,77 @@
 <?php
-function us_get_full_date($year, $month, $day, $dofweek, $type = UD_EN)
-{
-	$FUN_month_names = array(	//EN
-								array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'),
-								//CN
-								array('一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'),
-								//JP
-								array('一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月')
-						);
-
-	$FUN_week_names = array(
+class UCDATE {
+	var $m_lang = UD_EN;
+	
+	function UCDATE($p_lang)
+	{
+		 $this->m_lang = $p_lang;
+	}
+	
+	var $FUN_month_names = array(	
 								//EN
-								array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'), 
+								UD_EN=>array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'),
 								//CN
-								array('星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'),
+								UD_CN=>array('一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'),
 								//JP
-								array('日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日')		
+								UD_JP=>array('一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月')
 								);
 
-	$FUN_month_type = array(
+	var $FUN_week_names = array(
 								//EN
-								' ',
+								UD_EN=>array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'), 
 								//CN
-								'月',
+								UD_CN=>array('星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'),
 								//JP
-								'月'		
-							);
+								UD_JP=>array('日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日')
+								);
 
-	$FUN_year_type = array(
+	var $FUN_month_type = array(
 								//EN
-								' ',
+								UD_EN=>' ',
 								//CN
-								'年',
+								UD_CN=>'月',
 								//JP
-								'年',
-							);
+								UD_JP=>'月'
+								);
 
-	$FUN_day_type = array(
+	var $FUN_year_type = array(
 								//EN
-								' ',
+								UD_EN=>' ',
 								//CN
-								'日',
+								UD_CN=>'年',
 								//JP
-								'日',
-							);
-		
-	switch ($type)
+								UD_JP=>'年'
+								);
+
+	var $FUN_day_type = array(
+								//EN
+								UD_EN=>' ',
+								//CN
+								UD_CN=>'日',
+								//JP
+								UD_JP=>'日'
+								);
+
+	public function get_full_date($year, $month, $day, $dofweek)
 	{
-		case UD_CN:
-			return $year . $FUN_year_type[UD_CN] .  $month . $FUN_month_type[UD_CN] . $day . $FUN_day_type[UD_CN] . ' ' . $FUN_week_names[UD_CN][$dofweek];
-		case UD_EN:
-			return $FUN_week_names[UD_EN][$dofweek] . ', ' . $FUN_month_names[UD_EN][$month]  . ' ' . $day . ' ' . $year;
-		case UD_JP:
-			return $year . $FUN_year_type[UD_JP] .  $month . $FUN_month_type[UD_JP] . $day . $FUN_day_type[UD_JP] . ' ' . $FUN_week_names[UD_JP][$dofweek];
-		default:
-			return 'Date Pattern not found!';
+		switch ($this->m_lang)
+		{
+			case UD_CN:
+				return $year . $this->FUN_year_type[UD_CN] .  $month . $this->FUN_month_type[UD_CN] . $day . $this->FUN_day_type[UD_CN] . ' ' . $this->FUN_week_names[UD_CN][$dofweek];
+			case UD_EN:
+				return $this->FUN_week_names[UD_EN][$dofweek] . ', ' . $this->FUN_month_names[UD_EN][$month]  . ' ' . $day . ' ' . $year;
+			case UD_JP:
+				return $year . $this->FUN_year_type[UD_JP] .  $month . $this->FUN_month_type[UD_JP] . $day . $this->FUN_day_type[UD_JP] . ' ' . $this->FUN_week_names[UD_JP][$dofweek];
+			default:
+				return 'Date Pattern not found!';
+		}
+	}
+	
+	public function get_month_name($month)
+	{
+		$month = ltrim($month, '0') - 1;
+
+		return $this->FUN_month_names[$this->m_lang][$month];
 	}
 }
 ?>
