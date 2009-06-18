@@ -9,20 +9,20 @@ class UCDATE {
 	
 	var $FUN_month_names = array(	
 								//EN
-								UD_EN=>array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'),
+								UD_EN=>array(' ', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'),
 								//CN
-								UD_CN=>array('一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'),
+								UD_CN=>array(' ', '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'),
 								//JP
-								UD_JP=>array('一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月')
+								UD_JP=>array(' ', '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月')
 								);
 
 	var $FUN_week_names = array(
 								//EN
-								UD_EN=>array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'), 
+								UD_EN=>array(' ', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'), 
 								//CN
-								UD_CN=>array('星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'),
+								UD_CN=>array(' ', '星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'),
 								//JP
-								UD_JP=>array('日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日')
+								UD_JP=>array(' ', '日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日')
 								);
 
 	var $FUN_month_type = array(
@@ -69,7 +69,7 @@ class UCDATE {
 	
 	public function get_month_name($month)
 	{
-		$month = ltrim($month, '0') - 1;
+		$month = ltrim($month, '0');
 
 		return $this->FUN_month_names[$this->m_lang][$month];
 	}
