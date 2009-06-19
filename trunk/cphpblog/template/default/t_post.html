@@ -1,0 +1,284 @@
+<?php
+
+print <<<EOPOST
+<body>
+
+<div class='navbar section' id='navbar'>
+</div>
+
+<div id='outer-wrapper'>
+	<div id='wrap2'>
+		<!-- skip links for text browsers -->
+		<span id='skiplinks' style='display:none;'>
+			<a href='#main'>skip to main </a>
+			<a href='#sidebar'>skip to sidebar</a>
+		</span>
+
+		<div id='header-wrapper'>
+			<div class='header section' id='header'></div>
+		</div>
+
+		<div id='content-wrapper'>
+
+			<div id='main-wrapper'>
+				<div class='main section' id='main'>
+					<div class='widget Blog' id='Blog1'>
+						<div class='blog-posts hfeed'>
+
+							<!-- google_ad_section_start(name=default) -->
+							<h2 class='date-header'>$POST_post[dt_postdate]</h2>
+							
+							<div class='post uncustomized-post-template'>
+								<a name='$POST_post[s_posturi]'></a>
+								<h3 class='post-title'>$POST_post[s_posttitle]</h3>
+
+								<div class='post-header-line-1'></div>
+								
+								<div class='post-body'>
+
+									<p>$POST_post[tb_post]</p>
+
+									<div style='clear: both;'></div>
+								
+								</div><!--End of post-body-->
+
+								<div class='post-footer'>
+									<p class='post-footer-line post-footer-line-1'>
+										<span class='post-author'>$BODY_str_poster $POST_post[s_user_name]</span>
+										<span class='post-timestamp'>$BODY_str_time
+											<a class='timestamp-link' href='$POST_post[s_posturi]' title='permanent link'>$POST_post[c_posttime]</a></span>
+										<span class='post-comment-link'></span>
+										<span class='post-backlinks post-comment-link'></span>
+
+										<span class='post-icons'>
+											<span class='item-control blog-admin pid-$POST_post[s_posturi]'>
+												<a href='#' title='Edit Post'><span class='quick-edit-icon'><!--You can add a edit link here--></span></a>
+											</span>
+										</span>
+									</p>
+								
+									<p class='post-footer-line post-footer-line-2'>
+										<span class='post-labels'>$BODY_str_labels
+											$POST_tags_html
+										</span>
+									</p>
+								
+									<p class='post-footer-line post-footer-line-3'><!--Third Line of the footer--></p>
+
+								</div><!--End of Postfooter-->
+						
+							</div><!--End of post uncustomized-post-template-->
+						
+							<div id='comments'>
+								<a name='comments'></a>
+								<h4>$POST_post[i_cmcount] $BODY_str_comments</h4>
+
+								<dl id='comments-block'>
+EOPOST;
+
+$TMP_comment = array();
+foreach($POST_comments_total as $TMP_comment)
+{
+	$TMP_icon_style = ($TMP_comment['s_user'] == $GLB_user ?  'blogger-comment-icon' : 'anon-comment-icon');
+	
+	$TMP_user_link_html = ($TMP_comment['s_user'] == UD_NONAME ? $TMP_comment['s_user_name'] : "<a href='$GLB_root_url/userinfo.php?user=$TMP_comment[s_user]' rel='nofollow'>$TMP_comment[s_user_name]</a>" );
+	
+	print <<<EOPOST
+									<!--Comment start-->
+									<!--if you are the ownner, use the class blogger-comment-icon -->
+									<dt class='comment-author $TMP_icon_style' id='comment-1074057094204551287'>
+										<a name='comment-1074057094204551287'></a>
+										$TMP_user_link_html
+									</dt>	
+									<dd class='comment-body'>
+										<p>$TMP_comment[t_comment]</p>
+									</dd>
+										
+									<dd class='comment-footer'>
+										<span class='comment-timestamp'>
+											<span>$TMP_comment[dt_postdate] $TMP_comment[c_posttime]</span>
+											<span class='item-control blog-admin pid-1745483930'>
+												<a href='#' title='Delete Comment'><!--You can add a delete comment icon here--></a>
+											</span>
+										</span>
+									</dd>
+	        						<!--Comment end-->
+EOPOST;
+}
+
+print <<<EOPOST
+
+								</dl><!--End of comments-block-->
+								
+								<p class='comment-footer'>
+									<a href='#post comment' onclick=''>$BODY_str_writecomment</a>
+								</p>
+
+								<div id='backlinks-container'><!--If you want backlinks, Place it here--></div>
+							
+							</div><!--End of comments-->
+							<!-- google_ad_section_end -->
+
+						</div><!--blog-posts hfeed-->
+					
+					</div><!--End of widget Blog-->
+EOPOST;
+
+print <<<EOPOST
+					<div id='blog-pager'>
+						<a href='#' id='blog-pager-older-link' title='$BODY_str_prev'>$BODY_str_prev</a>
+						<a href='#'	id='blog-pager-newer-link' title='$BODY_str_next'>$BODY_str_next</a>
+						<a class='home-link' href='$GLB_root_url'>$BODY_str_home</a>
+					</div>
+						
+					<div class='blog-feeds'>
+						<div class='feed-links'><!--You can put feed links here if you like--></div>
+					</div>
+
+
+				</div><!--End of main section-->
+			</div><!--End of main wrapper-->
+			
+			<div id='sidebar-wrapper'>
+		
+				<div class='sidebar section' id='sidebar'>
+					<div class='widget Label' id='Label1'>
+						<h2>$BODY_str_labels</h2>
+
+						<div class='widget-content'>
+							
+							<ul>
+EOPOST;
+
+$TMP_tags_total = array();
+
+foreach($POST_tags_total as $TMP_tags_total)
+{	
+	print <<<EOPOST
+								
+								<li><a href='$TMP_tags_total[i_tagid]'>$TMP_tags_total[s_tagname]</a>($TMP_tags_total[i_tgcount])</li>
+
+EOPOST;
+}
+
+print <<<EOPOST
+							</ul>
+
+							<div class='clear'></div>
+							
+						</div><!--End of widget-content-->
+					</div><!--End of widget Label-->
+
+					<div class='widget BlogArchive' id='BlogArchive1'>
+						<h2>$BODY_str_blogarchive</h2>
+							
+						<div class='widget-content'>
+							<div id='ArchiveList'>
+								<div id='BlogArchive1_ArchiveList'>
+									<ul>
+EOPOST;
+
+$TMP_title_year_total = array();
+$TMP_title_month_total = array();
+
+foreach($POST_title_total as $TMP_year=>$TMP_title_year_total)
+{	
+	//Count the years total posts
+	$TMP_year_count = 0;
+	foreach($POST_title_count[$TMP_year] as $TMP_month_ctarray)
+	{
+		$TMP_year_count += array_sum($TMP_month_ctarray);
+	}
+	
+	print <<<EOPOST
+
+										<li class='archivedate expanded'>
+											<a class='toggle' href='#'><span class='zippy toggle-open'>&#9660;</span></a>
+											<a class='post-count-link' href='$TMP_year'>$TMP_year</a>(<span class='post-count'>$TMP_year_count</span>)
+												<ul>
+EOPOST;
+	
+	foreach($TMP_title_year_total as $TMP_month=>$TMP_title_month_total)
+	{
+		$TMP_month_count = 0;
+		$TMP_month_count = array_sum($TMP_month_ctarray);
+		
+		$TMP_month_name = $GLB_date->get_month_name($TMP_month);
+		print <<<EOPOST
+
+													<li class='archivedate expanded'>
+														<a class='toggle' href='#'><span class='zippy toggle-open'>&#9660;</span></a>
+														<a class='post-count-link' href='$TMP_year&$TMP_month'>$TMP_month_name</a>(<span class='post-count'>$TMP_month_count</span>)
+															<ul class='posts'>			
+EOPOST;
+
+		foreach($TMP_title_month_total as $TMP_title)
+		{
+			$TMP_post_link = "$GLB_root_url/showpost.php?pid=$TMP_title[i_postid]";
+			print <<<EOPOST
+
+																<li><a href='$TMP_post_link'>$TMP_title[s_posttitle]</a></li>
+EOPOST;
+		}
+		
+		print <<<EOPOST
+
+															</ul>
+													</li>
+EOPOST;
+	}
+	
+	print <<<EOPOST
+
+												</ul>
+										</li>
+EOPOST;
+}
+
+print <<<EOPOST
+
+									</ul>
+								</div><!--End of BlogArchive1_ArchiveList-->
+							</div><!--End of ArchiveList-->
+
+							<div class='clear'></div>
+					
+						</div><!--End of widget-content-->
+					</div><!--End of widget BlogArchive-->
+						
+					<div class='widget BloggerButton' id='BloggerButton2'>
+						<h2>$BODY_str_feed</h2>
+						<div class='widget-content'>
+							<p id="blogfeeds"><a target="_blank" href="$GLB_root_url/feed/atom.php" type="application/atom+xml"><img src="$GLB_root_url/img/rss.png"></a></p>
+								
+							<div class='clear'></div>
+						</div>
+					</div>
+						
+					<div class='widget BloggerButton' id='BloggerButton1'>
+						<div class='widget-content'>
+							<a href='http://www.blogger.com'><img alt='Powered By Blogger' src='$GLB_root_url/img/blogger-ipower-kahki.gif' /></a>
+								
+							<div class='clear'></div>
+						</div>
+					</div>
+						
+						
+				</div><!--End of sidebar section-->
+				
+			</div><!--End of sidebar-wrapper-->
+
+			<!-- spacer for skins that want sidebar and main to be the same height-->
+			<div class='clear'>&#160;</div>
+			
+		</div><!-- end content-wrapper -->
+			
+		<div id='footer-wrapper'>
+			<div class='footer section' id='footer'></div>
+		</div>
+	</div><!-- end wrap2 -->
+</div><!-- end outer-wrapper -->
+</body>
+</html>
+EOPOST;
+?>

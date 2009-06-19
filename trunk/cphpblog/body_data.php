@@ -13,8 +13,8 @@ $BODY_pid_list = '';
 
 //Query the posts of the current page
 $SQL_posts_query = $GLB_db->query(	"SELECT p.i_postid, p.s_posturi, p.s_posttitle, p.dt_postdate, p.c_posttime, p.tb_post, p.s_user, u.s_user_name, cs.i_cmcount " . 
-									" FROM cphpblog.tm_post AS p " .
-									" LEFT JOIN cphpblog.tr_user AS u ON p.s_user = u.s_user " .
+									" FROM tm_post AS p " .
+									" LEFT JOIN tr_usernames AS u ON p.s_user = u.s_user " .
 									" LEFT JOIN (SELECT c.i_postid, COUNT(c.i_comment_id) AS i_cmcount FROM tm_comments AS c WHERE c.tn_delflag = 0 AND c.tn_lang = $CONF_ui_lang GROUP BY c.i_postid) AS cs ON p.i_postid = cs.i_postid " . 
 									" WHERE p.tn_delflag = 0 AND p.s_user = '$GLB_user' AND p.tn_lang = $CONF_ui_lang " .
 									" ORDER BY p.dt_postdate DESC, p.c_posttime DESC"

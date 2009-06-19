@@ -1,15 +1,5 @@
 <?php
 
-$BODY_str_poster = $UI_POSTER[$CONF_ui_lang];
-$BODY_str_time = $UI_TIME[$CONF_ui_lang];
-$BODY_str_comments = $UI_COMMENTS[$CONF_ui_lang];
-$BODY_str_labels = $UI_LABELS[$CONF_ui_lang];
-$BODY_str_blogarchive = $UI_BLOGARCHIVE[$CONF_ui_lang];
-$BODY_str_feed = $UI_FEED[$CONF_ui_lang];
-$BODY_str_prev = $UI_PREV[$CONF_ui_lang];
-$BODY_str_next = $UI_NEXT[$CONF_ui_lang];
-$BODY_str_home = $UI_HOME[$CONF_ui_lang];
-
 print <<<EOBODY
 <body>
 <div id='outer-wrapper'>
@@ -37,6 +27,7 @@ $TMP_post = array();
 foreach($BODY_posts as $TMP_post)
 { 
 	$TMP_tags_html = '';
+	$TMP_post_link = "$GLB_root_url/showpost.php?pid=$TMP_post[i_postid]";
 	
 	foreach($BODY_tags[$TMP_post['i_postid']] as $TMP_taglink_id=>$TMP_post_tags)
 	{
@@ -50,7 +41,7 @@ foreach($BODY_posts as $TMP_post)
 							<!--Post start-->
 							<div class='post uncustomized-post-template'>
 								<a name='$TMP_post[s_posturi]'></a>
-								<h3 class='post-title'><a href='$TMP_post[s_posturi]'>$TMP_post[s_posttitle]</a></h3>
+								<h3 class='post-title'><a href='$TMP_post_link'>$TMP_post[s_posttitle]</a></h3>
 								
 								<div class='post-header-line-1'></div>
 
@@ -102,15 +93,12 @@ print <<<EOBODY
 						<div id='blog-pager'>
 							<a href='#' id='blog-pager-older-link' title='$BODY_str_prev'>$BODY_str_prev</a>
 							<a href='#'	id='blog-pager-newer-link' title='$BODY_str_next'>$BODY_str_next</a>
-							<a class='home-link' href='#'>$BODY_str_home</a>
+							<a class='home-link' href='$GLB_root_url'>$BODY_str_home</a>
 						</div>
 						
 						<div class='blog-feeds'>
-							<div class='feed-links'>
-
-							</div>
+							<div class='feed-links'><!--If you like feed links, place it here--></div>
 						</div>
-
 
 					</div>
 				</div>
@@ -170,7 +158,7 @@ foreach($BODY_title_total as $TMP_year=>$TMP_title_year_total)
 
 										<li class='archivedate expanded'>
 											<a class='toggle' href='#'><span class='zippy toggle-open'>&#9660;</span></a>
-											<a class='post-count-link' href='$TMP_year'>2009</a>(<span class='post-count'>$TMP_year_count</span>)
+											<a class='post-count-link' href='$TMP_year'>$TMP_year</a>(<span class='post-count'>$TMP_year_count</span>)
 												<ul>
 EOBODY;
 	
@@ -191,9 +179,10 @@ EOBODY;
 		foreach($TMP_title_month_total as $TMP_title)
 		{
 		
+			$TMP_post_link = "$GLB_root_url/showpost.php?pid=$TMP_title[i_postid]";
 			print <<<EOBODY
 
-																<li><a href='$TMP_title[s_posturi]'>$TMP_title[s_posttitle]</a></li>
+																<li><a href='$TMP_post_link'>$TMP_title[s_posttitle]</a></li>
 EOBODY;
 		}
 		
@@ -256,5 +245,6 @@ print <<<EOBODY
 	</div><!-- end wrap2 -->
 </div><!-- end outer-wrapper -->
 </body>
+</html>
 EOBODY;
 ?>
