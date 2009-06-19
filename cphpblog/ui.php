@@ -79,4 +79,35 @@ $UI_HOME = array(
 					//JP
 					UD_JP=>'ホーム'
 					);
+
+$UI_NONAME = array(
+					//EN
+					UD_EN=>'Anonymous',
+					//CN
+					UD_CN=>'游客',
+					//JP
+					UD_JP=>'匿名'
+					);
+
+$UI_WRITECOMMENT = array(
+					//EN
+					UD_EN=>'Post a Comment',
+					//CN
+					UD_CN=>'发表评论',
+					//JP
+					UD_JP=>'コメントを投稿'
+					);
+
+//UI String For multilanguage
+$BODY_str_poster = $UI_POSTER[$CONF_ui_lang];
+$BODY_str_time = $UI_TIME[$CONF_ui_lang];
+$BODY_str_comments = $UI_COMMENTS[$CONF_ui_lang];
+$BODY_str_labels = $UI_LABELS[$CONF_ui_lang];
+$BODY_str_blogarchive = $UI_BLOGARCHIVE[$CONF_ui_lang];
+$BODY_str_feed = $UI_FEED[$CONF_ui_lang];
+$BODY_str_prev = $UI_PREV[$CONF_ui_lang];
+$BODY_str_next = $UI_NEXT[$CONF_ui_lang];
+$BODY_str_home = $UI_HOME[$CONF_ui_lang];
+$BODY_str_noname = $UI_NONAME[$CONF_ui_lang];
+$BODY_str_writecomment = $UI_WRITECOMMENT[$CONF_ui_lang];
 ?>

@@ -1,10 +1,19 @@
 <?php
+/**************************************************
+//  This File INCLUDE DEFINED VAR, GLOBAL CONF, 
+//	UI STRING, MYSQL CLASS, DATEUI CLASS, PHYBASE,
+//	THEME VAR, USER, FULLURL, URI, DB INSTANCE,
+//	DATE INSTANCE
+//	THIS FILE SHOULD BE INCLUDE BY ANYOTHER PHP FILE
+***************************************************/
+
 //For this is DEPRECATED in PHP6, disable this featrue
 set_magic_quotes_runtime(FALSE);
 
 require_once('define.php');
-require_once('ui.php');
 require_once('conf/global_conf.php');
+
+require_once('ui.php');
 require_once('data/mysql_db.php');
 require_once('data/date_ui.php');
 
