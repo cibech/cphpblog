@@ -181,10 +181,40 @@ EOPOST;
 $TMP_title_year_total = array();
 $TMP_title_month_total = array();
 
+$TMP_istoggle_now = FALSE;
+$TMP_istoggle_passed = FALSE;
+
 foreach($POST_title_total as $TMP_year=>$TMP_title_year_total)
 {	
 	//Count the years total posts
 	$TMP_year_count = 0;
+	
+	//Add this code to reduce the comparation times of two string,
+	//I think the boolean compare will be faster
+	if(! $TMP_istoggle_passed)
+	{
+		if($TMP_year == $POST_toggle_year)
+		{
+			$TMP_li_class = 'archivedate expanded';
+			$TMP_sp_class = 'zippy toggle-open';
+			$TMP_toggle_tra = '&#9660;';
+			
+			$TMP_istoggle_now = TRUE;
+		}
+		else
+		{
+			$TMP_li_class = 'archivedate collapsed';
+			$TMP_sp_class = 'zippy';
+			$TMP_toggle_tra = '&#9658;';			
+		}
+	}
+	else
+	{
+		$TMP_li_class = 'archivedate collapsed';
+		$TMP_sp_class = 'zippy';
+		$TMP_toggle_tra = '&#9658;';			
+	}
+	
 	foreach($POST_title_count[$TMP_year] as $TMP_month_ctarray)
 	{
 		$TMP_year_count += array_sum($TMP_month_ctarray);
@@ -192,8 +222,8 @@ foreach($POST_title_total as $TMP_year=>$TMP_title_year_total)
 	
 	print <<<EOPOST
 
-										<li class='archivedate expanded'>
-											<a class='toggle' href='#'><span class='zippy toggle-open'>&#9660;</span></a>
+										<li id='litg$TMP_year' class='$TMP_li_class'>
+											<a class='toggle' href='javascript:doToggle("$TMP_year")'><span id='sptg$TMP_year' class='$TMP_sp_class'>$TMP_toggle_tra</span></a>
 											<a class='post-count-link' href='$TMP_year'>$TMP_year</a>(<span class='post-count'>$TMP_year_count</span>)
 												<ul>
 EOPOST;
@@ -201,13 +231,40 @@ EOPOST;
 	foreach($TMP_title_year_total as $TMP_month=>$TMP_title_month_total)
 	{
 		$TMP_month_count = 0;
-		$TMP_month_count = array_sum($TMP_month_ctarray);
+		$TMP_month_count = array_sum($POST_title_count[$TMP_year][$TMP_month]);
+		
+		//These code make things looks a mass, but deserve it
+		//if the artiles are a mass number
+		if($TMP_istoggle_now)
+		{
+			if($TMP_month == $POST_toggle_month)
+			{
+				$TMP_li_class = 'archivedate expanded';
+				$TMP_sp_class = 'zippy toggle-open';
+				$TMP_toggle_tra = '&#9660;';
+					
+				$TMP_istoggle_now = FALSE;
+				$TMP_istoggle_passed = TRUE;
+			}
+			else
+			{
+				$TMP_li_class = 'archivedate collapsed';
+				$TMP_sp_class = 'zippy';
+				$TMP_toggle_tra = '&#9658;';
+			}
+		}
+		else
+		{
+			$TMP_li_class = 'archivedate collapsed';
+			$TMP_sp_class = 'zippy';
+			$TMP_toggle_tra = '&#9658;';
+		}
 		
 		$TMP_month_name = $GLB_date->get_month_name($TMP_month);
 		print <<<EOPOST
 
-													<li class='archivedate expanded'>
-														<a class='toggle' href='#'><span class='zippy toggle-open'>&#9660;</span></a>
+													<li id='litg$TMP_year$TMP_month' class='$TMP_li_class'>
+														<a class='toggle' href='javascript:doToggle("$TMP_year$TMP_month")'><span id='sptg$TMP_year$TMP_month' class='$TMP_sp_class'>$TMP_toggle_tra</span></a>
 														<a class='post-count-link' href='$TMP_year&$TMP_month'>$TMP_month_name</a>(<span class='post-count'>$TMP_month_count</span>)
 															<ul class='posts'>			
 EOPOST;
