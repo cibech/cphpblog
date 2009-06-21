@@ -428,7 +428,36 @@ body#layout #sidebar {
   padding: 0;
 }-->
 </style>
-</head>
 
+<script type="text/javascript">
+function doToggle(tid)
+{
+	var sptg = 'sptg' + tid;
+	var litg = 'litg' + tid;
+	if(document.getElementById(sptg).getAttribute('className') == 'zippy' || document.getElementById(sptg).getAttribute('class') == 'zippy')
+	{
+		//For IE
+		document.getElementById(sptg).setAttribute('className', 'zippy toggle-open');
+		document.getElementById(litg).setAttribute('className', 'archivedate expanded');
+		//For Firefox&Other
+		document.getElementById(sptg).setAttribute('class', 'zippy toggle-open');
+		document.getElementById(litg).setAttribute('class', 'archivedate expanded');
+		
+		document.getElementById(sptg).innerHTML = '&#9660;';	
+	}
+	else
+	{
+		document.getElementById(sptg).setAttribute('className', 'zippy');
+		document.getElementById(litg).setAttribute('className', 'archivedate collapsed');
+		
+		document.getElementById(sptg).setAttribute('class', 'zippy');
+		document.getElementById(litg).setAttribute('class', 'archivedate collapsed');
+		
+		document.getElementById(sptg).innerHTML = '&#9658;';
+	}
+}
+</script>
+
+</head>
 EOCSS;
 ?>

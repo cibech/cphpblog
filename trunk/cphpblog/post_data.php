@@ -10,7 +10,7 @@ $POST_tags_html = '';
 //Get the request post data
 $SQL_post_query = $GLB_db->query(	"SELECT p.i_postid, p.s_posturi, p.s_posttitle, p.dt_postdate, p.c_posttime, p.tb_post, p.s_user, u.s_user_name, cs.i_cmcount " .
 									 " FROM tm_post AS p " .
-									 " LEFT JOIN tr_usernames AS u ON p.s_user = u.s_user " .
+									 " LEFT JOIN tr_usernames AS u ON p.s_user = u.s_user AND u.tn_lang = $CONF_ui_lang " .
 									 " LEFT JOIN (SELECT c.i_postid, COUNT(c.i_comment_id) AS i_cmcount FROM tm_comments AS c WHERE c.tn_delflag = 0 AND c.tn_lang = $CONF_ui_lang GROUP BY c.i_postid) AS cs ON p.i_postid = cs.i_postid " .
 									 " WHERE p.tn_delflag = 0 AND p.tn_lang = $CONF_ui_lang AND p.i_postid = $POST_post_id"
 								);
@@ -21,9 +21,12 @@ isset($POST_post['i_cmcount']) ? TRUE : $POST_post['i_cmcount'] = 0;
 list($TMP_year, $TMP_month, $TMP_day) = explode('-', $POST_post['dt_postdate']);
 list($TMP_hour, $TMP_minutes) = explode(':', $POST_post['c_posttime']);
 
+$POST_toggle_year = $TMP_year;
+$POST_toggle_month = $TMP_month;
+
 $TMP_timestamp = mktime($TMP_hour, $TMP_minutes, 0, $TMP_month, $TMP_day, $TMP_year);
 
-//These vars count from 1
+//These vars count from 1 and without heading 0
 $TMP_dofweek = date('w', $TMP_timestamp) + 1;
 $TMP_month = date('n', $TMP_timestamp);
 $TMP_day = date('j', $TMP_timestamp);
@@ -34,10 +37,9 @@ isset($POST_post['i_cmcount']) ? TRUE : $POST_post['i_cmcount'] = 0;
 
 //Get tags of request post
 $SQL_tag_query = $GLB_db->query(	"SELECT t.i_tagid, r.s_tagname " .
-									" FROM tm_tags t LEFT JOIN tr_tag r ON t.i_tagid = r.i_tagid " .
+									" FROM tm_tags t LEFT JOIN tr_tag r ON t.i_tagid = r.i_tagid AND r.tn_lang = $CONF_ui_lang " .
 									" WHERE t.i_postid = $POST_post_id " .
-									" AND t.tn_delflag = 0 " .
-									" AND r.tn_lang = $CONF_ui_lang "
+									" AND t.tn_delflag = 0 "
 								);
 
 while($TMP_tags = $GLB_db->fetch_array($SQL_tag_query))
@@ -49,8 +51,8 @@ while($TMP_tags = $GLB_db->fetch_array($SQL_tag_query))
 //Query all tags and numbers
 $SQL_tags_total_query = $GLB_db->query(	"SELECT ts.i_tagid, ts.i_tgcount, t.s_tagname FROM (SELECT tg.i_tagid, COUNT(tg.i_postid) AS i_tgcount " .
 										" FROM tm_tags AS tg WHERE tg.tn_delflag = 0 AND tg.i_postid IN (SELECT p.i_postid FROM tm_post AS p WHERE p.tn_delflag = 0 AND p.s_user = '$GLB_user' AND p.tn_lang = $CONF_ui_lang) GROUP BY tg.i_tagid) AS ts " .
-										" LEFT JOIN tr_tag AS t ON ts.i_tagid = t.i_tagid " .
-										" WHERE t.tn_delflag = 0 AND t.tn_lang = $CONF_ui_lang "
+										" LEFT JOIN tr_tag AS t ON ts.i_tagid = t.i_tagid AND t.tn_lang = $CONF_ui_lang " .
+										" WHERE t.tn_delflag = 0 "
 								);
 
 while($TMP_tags_total = $GLB_db->fetch_array($SQL_tags_total_query))

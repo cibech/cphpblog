@@ -14,7 +14,7 @@ $BODY_pid_list = '';
 //Query the posts of the current page
 $SQL_posts_query = $GLB_db->query(	"SELECT p.i_postid, p.s_posturi, p.s_posttitle, p.dt_postdate, p.c_posttime, p.tb_post, p.s_user, u.s_user_name, cs.i_cmcount " . 
 									" FROM tm_post AS p " .
-									" LEFT JOIN tr_usernames AS u ON p.s_user = u.s_user " .
+									" LEFT JOIN tr_usernames AS u ON p.s_user = u.s_user AND u.tn_lang = $CONF_ui_lang " .
 									" LEFT JOIN (SELECT c.i_postid, COUNT(c.i_comment_id) AS i_cmcount FROM tm_comments AS c WHERE c.tn_delflag = 0 AND c.tn_lang = $CONF_ui_lang GROUP BY c.i_postid) AS cs ON p.i_postid = cs.i_postid " . 
 									" WHERE p.tn_delflag = 0 AND p.s_user = '$GLB_user' AND p.tn_lang = $CONF_ui_lang " .
 									" ORDER BY p.dt_postdate DESC, p.c_posttime DESC"
@@ -47,10 +47,9 @@ $GLB_db->free_result($SQL_posts_query);
 //Query the tags of current page post
 $BODY_pid_list = substr($BODY_pid_list, 1);
 $SQL_tags_query = $GLB_db->query(	"SELECT t.i_postid, t.i_tagid, r.s_tagname " .
-									" FROM tm_tags t LEFT JOIN tr_tag r ON t.i_tagid = r.i_tagid " .
+									" FROM tm_tags t LEFT JOIN tr_tag r ON t.i_tagid = r.i_tagid AND r.tn_lang = $CONF_ui_lang " .
 									" WHERE t.i_postid in ($BODY_pid_list) " .
 									" AND t.tn_delflag = 0 " .
-									" AND r.tn_lang = $CONF_ui_lang " .
 									" ORDER BY t.i_postid "
 								);
 
@@ -62,8 +61,8 @@ while($TMP_tags = $GLB_db->fetch_array($SQL_tags_query))
 //Query all tags and numbers
 $SQL_tags_total_query = $GLB_db->query(	"SELECT ts.i_tagid, ts.i_tgcount, t.s_tagname FROM (SELECT tg.i_tagid, COUNT(tg.i_postid) AS i_tgcount " .
 										" FROM tm_tags AS tg WHERE tg.tn_delflag = 0 AND tg.i_postid IN (SELECT p.i_postid FROM tm_post AS p WHERE p.tn_delflag = 0 AND p.s_user = '$GLB_user' AND p.tn_lang = $CONF_ui_lang) GROUP BY tg.i_tagid) AS ts " .
-										" LEFT JOIN tr_tag AS t ON ts.i_tagid = t.i_tagid " .
-										" WHERE t.tn_delflag = 0 AND t.tn_lang = $CONF_ui_lang "
+										" LEFT JOIN tr_tag AS t ON ts.i_tagid = t.i_tagid AND t.tn_lang = $CONF_ui_lang " .
+										" WHERE t.tn_delflag = 0 "
 								);
 
 while($TMP_tags_total = $GLB_db->fetch_array($SQL_tags_total_query))
