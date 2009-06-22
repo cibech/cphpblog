@@ -6,6 +6,11 @@ $POST_tags_total = array();
 $POST_title_total = array();
 $POST_title_count = array();
 $POST_tags_html = '';
+$POST_walk_array = array();
+$POST_previous_id = '';
+$POST_next_id = '';
+$POST_previous_pager = '';
+$POST_next_pager = '';
 
 //Get the request post data
 $SQL_post_query = $GLB_db->query(	"SELECT p.i_postid, p.s_posturi, p.s_posttitle, p.dt_postdate, p.c_posttime, p.tb_post, p.s_user, u.s_user_name, cs.i_cmcount " .
@@ -68,12 +73,21 @@ $SQL_titles_total_query = $GLB_db->query(	"SELECT t.dt_postdate, t.i_postid, t.s
 								);
 
 $POST_title_count = array();
+$POST_walk_key = -1;
 while($TMP_title_total = $GLB_db->fetch_array($SQL_titles_total_query))
 {
+	$POST_walk_array[++$POST_walk_key] = $TMP_title_total['i_postid'];
+
 	list($TMP_year, $TMP_month, $TMP_day) = explode('-', $TMP_title_total['dt_postdate']);
 	$POST_title_total[$TMP_year][$TMP_month][] = $TMP_title_total;
 	$POST_title_count[$TMP_year][$TMP_month][] = 1;			//For the count of title
 }
+
+//Get value of the previous and the next post id
+$POST_walk_current_key = array_search($POST_post_id, $POST_walk_array);
+//The sort is DESC, so you must decrease key while get the next
+$POST_next_id = ( ($POST_walk_current_key-1) < 0 ? -1 : $POST_walk_array[$POST_walk_current_key-1] );
+$POST_previous_id = ( ($POST_walk_current_key+1) > $POST_walk_key ? -1 : $POST_walk_array[$POST_walk_current_key+1] );
 
 //Query all comments
 $SQL_comments_total_query = $GLB_db->query(	"SELECT c.i_comment_id, c.s_user, u.s_user_name, c.dt_postdate, c.c_posttime, c.t_comment, c.tn_isreply, c.i_repid, c.tn_isowner_only " .
