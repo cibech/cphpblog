@@ -124,10 +124,21 @@ print <<<EOPOST
 					</div><!--End of widget Blog-->
 EOPOST;
 
+//Set Up the pager
+if($POST_previous_id != -1)
+{
+	$POST_previous_pager = "<a href='$GLB_root_url/showpost.php?pid=$POST_previous_id' id='blog-pager-older-link' title='$BODY_str_prev'>$BODY_str_prev</a>";
+}
+
+if($POST_next_id != -1)
+{
+	$POST_next_pager = "<a href='$GLB_root_url/showpost.php?pid=$POST_next_id' id='blog-pager-newer-link' title='$BODY_str_next'>$BODY_str_next</a>";
+}
+
 print <<<EOPOST
 					<div id='blog-pager'>
-						<a href='#' id='blog-pager-older-link' title='$BODY_str_prev'>$BODY_str_prev</a>
-						<a href='#'	id='blog-pager-newer-link' title='$BODY_str_next'>$BODY_str_next</a>
+						$POST_next_pager
+						$POST_previous_pager
 						<a class='home-link' href='$GLB_root_url'>$BODY_str_home</a>
 					</div>
 						
