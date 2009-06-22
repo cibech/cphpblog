@@ -156,7 +156,7 @@ foreach($POST_tags_total as $TMP_tags_total)
 {	
 	print <<<EOPOST
 								
-								<li><a href='$TMP_tags_total[i_tagid]'>$TMP_tags_total[s_tagname]</a>($TMP_tags_total[i_tgcount])</li>
+								<li><a href='$GLB_root_url/showtag.php?tagid=$TMP_tags_total[i_tagid]'>$TMP_tags_total[s_tagname]</a>($TMP_tags_total[i_tgcount])</li>
 
 EOPOST;
 }
@@ -181,6 +181,7 @@ EOPOST;
 $TMP_title_year_total = array();
 $TMP_title_month_total = array();
 
+//Set the first post title open
 $TMP_istoggle_now = FALSE;
 $TMP_istoggle_passed = FALSE;
 
@@ -224,7 +225,7 @@ foreach($POST_title_total as $TMP_year=>$TMP_title_year_total)
 
 										<li id='litg$TMP_year' class='$TMP_li_class'>
 											<a class='toggle' href='javascript:doToggle("$TMP_year")'><span id='sptg$TMP_year' class='$TMP_sp_class'>$TMP_toggle_tra</span></a>
-											<a class='post-count-link' href='$TMP_year'>$TMP_year</a>(<span class='post-count'>$TMP_year_count</span>)
+											<a class='post-count-link' href='$GLB_root_url/showtime.php?date=$TMP_year'>$TMP_year</a>(<span class='post-count'>$TMP_year_count</span>)
 												<ul>
 EOPOST;
 	
@@ -265,7 +266,7 @@ EOPOST;
 
 													<li id='litg$TMP_year$TMP_month' class='$TMP_li_class'>
 														<a class='toggle' href='javascript:doToggle("$TMP_year$TMP_month")'><span id='sptg$TMP_year$TMP_month' class='$TMP_sp_class'>$TMP_toggle_tra</span></a>
-														<a class='post-count-link' href='$TMP_year&$TMP_month'>$TMP_month_name</a>(<span class='post-count'>$TMP_month_count</span>)
+														<a class='post-count-link' href='$GLB_root_url/showtime.php?date=$TMP_year$TMP_month'>$TMP_month_name</a>(<span class='post-count'>$TMP_month_count</span>)
 															<ul class='posts'>			
 EOPOST;
 
