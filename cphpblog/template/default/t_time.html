@@ -47,10 +47,10 @@ foreach($BODY_posts as $TMP_post)
 
 								<div class='post-body'>
 									<p>$TMP_post[tb_post]</p>
-									
+
 									<div style='clear: both;'></div>
 								</div>
-								
+
 								<div class='post-footer'>
 									<p class='post-footer-line post-footer-line-1'>
 										<span class='post-author'>$BODY_str_poster $TMP_post[s_user_name]</span>
@@ -145,25 +145,39 @@ EOBODY;
 $TMP_title_year_total = array();
 $TMP_title_month_total = array();
 
-//Set the first Month to be open
-$TMP_istoggle_top = TRUE;
+//Set the first post title open
+$TMP_istoggle_now = FALSE;
+$TMP_istoggle_passed = FALSE;
 
 foreach($BODY_title_total as $TMP_year=>$TMP_title_year_total)
 {	
 	//Count the years total posts
 	$TMP_year_count = 0;
 	
-	if($TMP_istoggle_top)
+	//Add this code to reduce the comparation times of two string,
+	//I think the boolean compare will be faster
+	if(! $TMP_istoggle_passed)
 	{
-		$TMP_li_class = 'archivedate expanded';
-		$TMP_sp_class = 'zippy toggle-open';
-		$TMP_toggle_tra = '&#9660;';
+		if($TMP_year == $POST_toggle_year)
+		{
+			$TMP_li_class = 'archivedate expanded';
+			$TMP_sp_class = 'zippy toggle-open';
+			$TMP_toggle_tra = '&#9660;';
+			
+			$TMP_istoggle_now = TRUE;
+		}
+		else
+		{
+			$TMP_li_class = 'archivedate collapsed';
+			$TMP_sp_class = 'zippy';
+			$TMP_toggle_tra = '&#9658;';			
+		}
 	}
 	else
 	{
 		$TMP_li_class = 'archivedate collapsed';
 		$TMP_sp_class = 'zippy';
-		$TMP_toggle_tra = '&#9658;';
+		$TMP_toggle_tra = '&#9658;';			
 	}
 
 	foreach($BODY_title_count[$TMP_year] as $TMP_month_ctarray)
@@ -184,11 +198,25 @@ EOBODY;
 		$TMP_month_count = 0;
 		$TMP_month_count = array_sum($BODY_title_count[$TMP_year][$TMP_month]);
 		
-		if($TMP_istoggle_top)
+		//These code make things looks a mass, but deserve it
+		//if the artiles are a mass number
+		if($TMP_istoggle_now)
 		{
-			$TMP_li_class = 'archivedate expanded';
-			$TMP_sp_class = 'zippy toggle-open';
-			$TMP_toggle_tra = '&#9660;';
+			if($TMP_month == $POST_toggle_month)
+			{
+				$TMP_li_class = 'archivedate expanded';
+				$TMP_sp_class = 'zippy toggle-open';
+				$TMP_toggle_tra = '&#9660;';
+					
+				$TMP_istoggle_now = FALSE;
+				$TMP_istoggle_passed = TRUE;
+			}
+			else
+			{
+				$TMP_li_class = 'archivedate collapsed';
+				$TMP_sp_class = 'zippy';
+				$TMP_toggle_tra = '&#9658;';
+			}
 		}
 		else
 		{
@@ -203,12 +231,9 @@ EOBODY;
 													<li id='litg$TMP_year$TMP_month' class='$TMP_li_class'>
 														<a class='toggle' href='javascript:doToggle("$TMP_year$TMP_month")'><span id='sptg$TMP_year$TMP_month' class='$TMP_sp_class'>$TMP_toggle_tra</span></a>
 														<a class='post-count-link' href='$GLB_root_url/showtime.php?date=$TMP_year$TMP_month'>$TMP_month_name</a>(<span class='post-count'>$TMP_month_count</span>)
-															<ul class='posts'>			
+															<ul class='posts'>
 EOBODY;
 
-		//Turn to Second Month
-		$TMP_istoggle_top = FALSE;
-		
 		foreach($TMP_title_month_total as $TMP_title)
 		{
 		
@@ -218,7 +243,7 @@ EOBODY;
 																<li><a href='$TMP_post_link'>$TMP_title[s_posttitle]</a></li>
 EOBODY;
 		}
-		
+
 		print <<<EOBODY
 
 															</ul>

@@ -1,5 +1,11 @@
 <?php
 
+$UI_PARAM_TAG = $BODY_tag_name;
+$UI_PARAM_HOME = $GLB_root_url;
+
+$BODY_str_showalltags = str_replace('UI_PARAM_TAG', $UI_PARAM_TAG, $BODY_str_showalltags);
+$BODY_str_showalltags = str_replace('UI_PARAM_HOME', $UI_PARAM_HOME, $BODY_str_showalltags);
+
 print <<<EOBODY
 <body>
 <div id='outer-wrapper'>
@@ -20,6 +26,22 @@ print <<<EOBODY
 				<div class='main section' id='main'>
 					<div class='widget Blog' id='Blog1'>
 						<div class='blog-posts hfeed'>
+						
+							<div class='status-msg-wrap'>
+								<div class='status-msg-body'>
+									$BODY_str_showalltags
+								</div>
+
+								<div class='status-msg-border'>
+									<div class='status-msg-bg'>
+										<div class='status-msg-hidden'>
+										$BODY_str_showalltags
+										</div>
+									</div>
+								</div>
+							</div>
+							<div style='clear: both;'></div>
+
 EOBODY;
 
 $TMP_post = array();
@@ -42,15 +64,15 @@ foreach($BODY_posts as $TMP_post)
 							<div class='post uncustomized-post-template'>
 								<a name='$TMP_post[s_posturi]'></a>
 								<h3 class='post-title'><a href='$TMP_post_link'>$TMP_post[s_posttitle]</a></h3>
-								
+
 								<div class='post-header-line-1'></div>
 
 								<div class='post-body'>
 									<p>$TMP_post[tb_post]</p>
-									
+
 									<div style='clear: both;'></div>
 								</div>
-								
+
 								<div class='post-footer'>
 									<p class='post-footer-line post-footer-line-1'>
 										<span class='post-author'>$BODY_str_poster $TMP_post[s_user_name]</span>
@@ -75,9 +97,9 @@ foreach($BODY_posts as $TMP_post)
 											$TMP_tags_html
 										</span>
 									</p>
-									
+
 									<p class='post-footer-line post-footer-line-3'><!--The third line of the bottom post--></p>
-								
+
 								</div>
 							</div>
 							<!--Post end-->
@@ -86,7 +108,7 @@ EOBODY;
 }
 
 print <<<EOBODY
-				
+
 							<!-- google_ad_section_end -->
 						</div>
 						

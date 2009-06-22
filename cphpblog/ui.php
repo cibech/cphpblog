@@ -98,6 +98,15 @@ $UI_WRITECOMMENT = array(
 					UD_JP=>'コメントを投稿'
 					);
 
+$UI_SHOWALLTAGS = array(
+					//EN
+					UD_EN=>'Showing posts with label <b>UI_PARAM_TAG</b>. <a href=\'UI_PARAM_HOME\'>Show all posts</a>',
+					//CN
+					UD_CN=>'显示标签为 <b>UI_PARAM_TAG</b> 的帖子。<a href=\'UI_PARAM_HOME\'>显示所有帖子</a>',
+					//JP
+					UD_JP=>'ラベル <b>UI_PARAM_TAG</b> の投稿を表示しています。 <a href=\'UI_PARAM_HOME\'>すべての投稿を表示</a>'
+					);
+
 //UI String For multilanguage
 $BODY_str_poster = $UI_POSTER[$CONF_ui_lang];
 $BODY_str_time = $UI_TIME[$CONF_ui_lang];
@@ -110,4 +119,5 @@ $BODY_str_next = $UI_NEXT[$CONF_ui_lang];
 $BODY_str_home = $UI_HOME[$CONF_ui_lang];
 $BODY_str_noname = $UI_NONAME[$CONF_ui_lang];
 $BODY_str_writecomment = $UI_WRITECOMMENT[$CONF_ui_lang];
+$BODY_str_showalltags = $UI_SHOWALLTAGS[$CONF_ui_lang];
 ?>

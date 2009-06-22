@@ -45,7 +45,7 @@ $SQL_tag_query = $GLB_db->query(	"SELECT t.i_tagid, r.s_tagname " .
 while($TMP_tags = $GLB_db->fetch_array($SQL_tag_query))
 {
 	$POST_tags[$TMP_tags['i_tagid']] = $TMP_tags['s_tagname'];
-	$POST_tags_html .= "&nbsp;<a href='$TMP_tags[i_tagid]' rel='tag'>$TMP_tags[s_tagname]</a>&nbsp;";
+	$POST_tags_html .= "&nbsp;<a href='$GLB_root_url/showtag.php?tagid=$TMP_tags[i_tagid]' rel='tag'>$TMP_tags[s_tagname]</a>&nbsp;";
 }
 
 //Query all tags and numbers
