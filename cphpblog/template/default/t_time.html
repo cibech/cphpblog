@@ -85,15 +85,30 @@ foreach($BODY_posts as $TMP_post)
 EOBODY;
 }
 
+if($TIME_month_mode)
+{
+	$TMP_next_yearmonth_name = $GLB_date->get_yearmonth_name($BODY_next_yearmonth);
+	$TMP_prev_yearmonth_name = $GLB_date->get_yearmonth_name($BODY_prev_yearmonth);
+	$BODY_nextpager_html = ($BODY_next_yearmonth == -1 ? '' : "<a href='$GLB_root_url/showtime.php?date=$BODY_next_yearmonth' id='blog-pager-newer-link' title='$TMP_next_yearmonth_name'>$TMP_next_yearmonth_name</a>");
+	$BODY_prevpager_html = ($BODY_prev_yearmonth == -1 ? '' : "<a href='$GLB_root_url/showtime.php?date=$BODY_prev_yearmonth' id='blog-pager-older-link' title='$TMP_prev_yearmonth_name'>$TMP_prev_yearmonth_name</a>");
+	$BODY_homepager_html = ($BODY_next_yearmonth == -1 && $BODY_prev_yearmonth == -1 ? '' : "<a class='home-link' href='$GLB_root_url'>$BODY_str_home</a>");
+}
+else
+{
+	$BODY_nextpager_html = ($BODY_isnot_top ? "<a href='$GLB_root_url/index.php?is_next=0&tmstp=$BODY_timestamp_top' id='blog-pager-newer-link' title='$BODY_str_next'>$BODY_str_next</a>" : '');
+	$BODY_prevpager_html = ($BODY_isnot_bottom ? "<a href='$GLB_root_url/index.php?is_next=1&tmstp=$BODY_timestamp_bottom' id='blog-pager-older-link' title='$BODY_str_prev'>$BODY_str_prev</a>" : '');
+	$BODY_homepager_html = ($BODY_isnot_top || $BODY_isnot_bottom ? "<a class='home-link' href='$GLB_root_url'>$BODY_str_home</a>" : '');
+}
+
 print <<<EOBODY
 				
 							<!-- google_ad_section_end -->
 						</div>
 						
 						<div id='blog-pager'>
-							<a href='#' id='blog-pager-older-link' title='$BODY_str_prev'>$BODY_str_prev</a>
-							<a href='#'	id='blog-pager-newer-link' title='$BODY_str_next'>$BODY_str_next</a>
-							<a class='home-link' href='$GLB_root_url'>$BODY_str_home</a>
+							$BODY_nextpager_html
+							$BODY_prevpager_html
+							$BODY_homepager_html
 						</div>
 						
 						<div class='blog-feeds'>

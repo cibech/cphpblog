@@ -69,7 +69,7 @@ while($TMP_tags_total = $GLB_db->fetch_array($SQL_tags_total_query))
 //Query all titles and numbers
 $SQL_titles_total_query = $GLB_db->query(	"SELECT t.dt_postdate, t.i_postid, t.s_posturi, t.s_posttitle FROM tm_post AS t " .
 											" WHERE t.tn_delflag = 0 AND t.s_user = '$GLB_user' AND t.tn_lang = $CONF_ui_lang " .
-											" ORDER BY t.dt_postdate DESC, t.c_posttime DESC"
+											" ORDER BY t.i_timestamp DESC"
 								);
 
 $POST_title_count = array();
