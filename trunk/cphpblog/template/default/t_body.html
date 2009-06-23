@@ -85,15 +85,19 @@ foreach($BODY_posts as $TMP_post)
 EOBODY;
 }
 
+$BODY_nextpager_html = ($BODY_isnot_top ? "<a href='$GLB_root_url/index.php?is_next=0&tmstp=$BODY_timestamp_top' id='blog-pager-newer-link' title='$BODY_str_next'>$BODY_str_next</a>" : '');
+$BODY_prevpager_html = ($BODY_isnot_bottom ? "<a href='$GLB_root_url/index.php?is_next=1&tmstp=$BODY_timestamp_bottom' id='blog-pager-older-link' title='$BODY_str_prev'>$BODY_str_prev</a>" : '');
+$BODY_homepager_html = ($BODY_isnot_top || $BODY_isnot_bottom ? "<a class='home-link' href='$GLB_root_url'>$BODY_str_home</a>" : '');
+
 print <<<EOBODY
 				
 							<!-- google_ad_section_end -->
 						</div>
 						
 						<div id='blog-pager'>
-							<a href='#' id='blog-pager-older-link' title='$BODY_str_prev'>$BODY_str_prev</a>
-							<a href='#'	id='blog-pager-newer-link' title='$BODY_str_next'>$BODY_str_next</a>
-							<a class='home-link' href='$GLB_root_url'>$BODY_str_home</a>
+							$BODY_nextpager_html
+							$BODY_prevpager_html
+							$BODY_homepager_html
 						</div>
 						
 						<div class='blog-feeds'>

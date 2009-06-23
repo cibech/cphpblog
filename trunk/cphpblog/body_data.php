@@ -10,18 +10,45 @@ $BODY_tags_total = array();
 $BODY_title_total = array();
 //List of post id
 $BODY_pid_list = '';
+//Time stamp for pager
+$BODY_timestamp_top = -1;
+$BODY_timestamp_bottom = -1;
+//Is empty flag
+$BODY_is_empty = TRUE;
+//pager control
+$BODY_top_edge = -1;
+$BODY_bottom_edge = -1;
+$BODY_isnot_top = TRUE;
+$BODY_isnot_bottom = TRUE;
+
+//Set up SQL
+isset($BODY_page_timestamp) ? ($SQL_page_condition = ($BODY_is_nextpage ? " AND p.i_timestamp < $BODY_page_timestamp " : " AND p.i_timestamp > $BODY_page_timestamp " )) : $SQL_page_condition = '';
+
+//Query the edge of the paging
+$SQL_edge_query = $GLB_db->query(	"SELECT max(p.i_timestamp) AS TOP_EDGE, min(p.i_timestamp) AS BOTTOM_EDGE " . 
+									" FROM tm_post AS p " .
+									" WHERE p.tn_delflag = 0 AND p.s_user = '$GLB_user' AND p.tn_lang = $CONF_ui_lang "
+								);
+
+$TMP_edge = $GLB_db->fetch_array($SQL_edge_query);
+$BODY_top_edge = $TMP_edge['TOP_EDGE'];
+$BODY_bottom_edge = $TMP_edge['BOTTOM_EDGE'];
 
 //Query the posts of the current page
-$SQL_posts_query = $GLB_db->query(	"SELECT p.i_postid, p.s_posturi, p.s_posttitle, p.dt_postdate, p.c_posttime, p.tb_post, p.s_user, u.s_user_name, cs.i_cmcount " . 
+$SQL_posts_query = $GLB_db->query(	"SELECT p.i_postid, p.s_posturi, p.s_posttitle, p.i_timestamp, p.dt_postdate, p.c_posttime, p.tb_post, p.s_user, u.s_user_name, cs.i_cmcount " . 
 									" FROM tm_post AS p " .
 									" LEFT JOIN tr_usernames AS u ON p.s_user = u.s_user AND u.tn_lang = $CONF_ui_lang " .
 									" LEFT JOIN (SELECT c.i_postid, COUNT(c.i_comment_id) AS i_cmcount FROM tm_comments AS c WHERE c.tn_delflag = 0 AND c.tn_lang = $CONF_ui_lang GROUP BY c.i_postid) AS cs ON p.i_postid = cs.i_postid " . 
-									" WHERE p.tn_delflag = 0 AND p.s_user = '$GLB_user' AND p.tn_lang = $CONF_ui_lang " .
-									" ORDER BY p.dt_postdate DESC, p.c_posttime DESC"
+									" WHERE p.tn_delflag = 0 AND p.s_user = '$GLB_user' AND p.tn_lang = $CONF_ui_lang $SQL_page_condition " .
+									" ORDER BY p.i_timestamp DESC " .
+									" LIMIT 0, $CONF_posts_perpage "
 								);
 
 while($TMP_post = $GLB_db->fetch_array($SQL_posts_query))
 {
+	//Data returned, We got at least one record
+	$BODY_is_empty = FALSE;
+	
 	list($TMP_year, $TMP_month, $TMP_day) = explode('-', $TMP_post['dt_postdate']);
 	list($TMP_hour, $TMP_minutes) = explode(':', $TMP_post['c_posttime']);
 	
@@ -34,6 +61,11 @@ while($TMP_post = $GLB_db->fetch_array($SQL_posts_query))
 	
 	$TMP_post['dt_postdate'] = $GLB_date->get_full_date($TMP_year, $TMP_month, $TMP_day, $TMP_dofweek);
 	
+	//Set timestamp for paging
+	$BODY_timestamp_top == -1 ? $BODY_timestamp_top = $TMP_post['i_timestamp'] : TRUE;
+	$BODY_timestamp_bottom = $TMP_post['i_timestamp'];
+	
+	//Count for nothing means 0 comment
 	isset($TMP_post['i_cmcount']) ? TRUE : $TMP_post['i_cmcount'] = 0;
 
 	$BODY_posts[$TMP_post['i_postid']] = $TMP_post;
@@ -43,6 +75,17 @@ while($TMP_post = $GLB_db->fetch_array($SQL_posts_query))
 	$BODY_pid_list .= ',' . $TMP_post['i_postid'];
 }
 $GLB_db->free_result($SQL_posts_query);
+
+//Set the pager control
+if($BODY_timestamp_top == $BODY_top_edge)
+{
+	$BODY_isnot_top = FALSE;
+}
+
+if($BODY_timestamp_bottom == $BODY_bottom_edge)
+{
+	$BODY_isnot_bottom = FALSE;
+}
 
 //Query the tags of current page post
 $BODY_pid_list = substr($BODY_pid_list, 1);
@@ -74,10 +117,11 @@ while($TMP_tags_total = $GLB_db->fetch_array($SQL_tags_total_query))
 //Query all titles and numbers
 $SQL_titles_total_query = $GLB_db->query(	"SELECT t.dt_postdate, t.i_postid, t.s_posturi, t.s_posttitle FROM tm_post AS t " .
 											" WHERE t.tn_delflag = 0 AND t.s_user = '$GLB_user' AND t.tn_lang = $CONF_ui_lang " .
-											" ORDER BY t.dt_postdate DESC, t.c_posttime DESC"
+											" ORDER BY t.i_timestamp DESC"
 								);
 
 $BODY_title_count = array();
+//This loop consume the most of time, do not place too much code here, so I get the edge data by another sql, not here
 while($TMP_title_total = $GLB_db->fetch_array($SQL_titles_total_query))
 {
 	list($TMP_year, $TMP_month, $TMP_day) = explode('-', $TMP_title_total['dt_postdate']);

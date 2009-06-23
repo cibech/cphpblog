@@ -11,4 +11,5 @@ $CONF_dbname='cphpblog';
 $CONF_dbpconnect=0;
 
 $CONF_ui_lang=UD_CN;
+$CONF_posts_perpage=5;
 ?>
