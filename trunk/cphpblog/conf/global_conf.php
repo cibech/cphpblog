@@ -12,4 +12,6 @@ $CONF_dbpconnect=0;
 
 $CONF_ui_lang=UD_CN;
 $CONF_posts_perpage=5;
+$CONF_tags_perpage=5;
+$CONF_year_perpage=$CONF_posts_perpage;
 ?>

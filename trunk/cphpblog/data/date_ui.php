@@ -73,5 +73,28 @@ class UCDATE {
 
 		return $this->FUN_month_names[$this->m_lang][$month];
 	}
+	
+	public function get_yearmonth_name($yearmonth)
+	{
+		if($yearmonth == -1)
+		{
+			return 'WRONG';
+		}
+		
+		$year = substr($yearmonth, 0, 4);
+		$month = ltrim(substr($yearmonth, 4, 2), '0');
+
+		switch ($this->m_lang)
+		{
+			case UD_CN:
+				return $year . $this->FUN_year_type[UD_CN] .  $month . $this->FUN_month_type[UD_CN];
+			case UD_EN:
+				return $this->FUN_month_names[UD_EN][$month]  . ' ' . $year;
+			case UD_JP:
+				return $year . $this->FUN_year_type[UD_JP] .  $month . $this->FUN_month_type[UD_JP];
+			default:
+				return 'Date Pattern not found!';
+		}
+	}
 }
 ?>
