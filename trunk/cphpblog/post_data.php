@@ -13,14 +13,12 @@ $POST_previous_pager = '';
 $POST_next_pager = '';
 
 //Get the request post data
-$SQL_post_query = $GLB_db->query(	"SELECT p.i_postid, p.s_posturi, p.s_posttitle, p.dt_postdate, p.c_posttime, p.tb_post, p.s_user, u.s_user_name, cs.i_cmcount " .
+$POST_post = $GLB_db->get_one(	"SELECT p.i_postid, p.s_posturi, p.s_posttitle, p.dt_postdate, p.c_posttime, p.tb_post, p.s_user, u.s_user_name, cs.i_cmcount " .
 									 " FROM tm_post AS p " .
 									 " LEFT JOIN tr_usernames AS u ON p.s_user = u.s_user AND u.tn_lang = $CONF_ui_lang " .
 									 " LEFT JOIN (SELECT c.i_postid, COUNT(c.i_comment_id) AS i_cmcount FROM tm_comments AS c WHERE c.tn_delflag = 0 AND c.tn_lang = $CONF_ui_lang GROUP BY c.i_postid) AS cs ON p.i_postid = cs.i_postid " .
 									 " WHERE p.tn_delflag = 0 AND p.tn_lang = $CONF_ui_lang AND p.i_postid = $POST_post_id"
 								);
-
-$POST_post = $GLB_db->fetch_array($SQL_post_query);
 
 isset($POST_post['i_cmcount']) ? TRUE : $POST_post['i_cmcount'] = 0;
 list($TMP_year, $TMP_month, $TMP_day) = explode('-', $POST_post['dt_postdate']);

@@ -28,12 +28,11 @@ $BODY_isnot_bottom = TRUE;
 if(! $TIME_month_mode)
 {
 	//Query the edge of the paging
-	$SQL_edge_query = $GLB_db->query(	"SELECT max(p.i_timestamp) AS TOP_EDGE, min(p.i_timestamp) AS BOTTOM_EDGE " . 
+	$TMP_edge = $GLB_db->get_one(	"SELECT max(p.i_timestamp) AS TOP_EDGE, min(p.i_timestamp) AS BOTTOM_EDGE " . 
 										" FROM tm_post AS p " .
 										" WHERE p.tn_delflag = 0 AND p.s_user = '$GLB_user' AND p.tn_lang = $CONF_ui_lang "
 									);
 
-	$TMP_edge = $GLB_db->fetch_array($SQL_edge_query);
 	$BODY_top_edge = $TMP_edge['TOP_EDGE'];
 	$BODY_bottom_edge = $TMP_edge['BOTTOM_EDGE'];
 }
